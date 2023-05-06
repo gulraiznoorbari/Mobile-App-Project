@@ -1,8 +1,8 @@
-#### Introduction:
+## Introduction:
 
 Our Travel Planner/Guide app is designed to make travel planning and management easier for users. With features such as destination discovery, itinerary planning, and booking management, users can plan and manage their travels with ease.
 
-#### Features:
+## Features:
 
 -   **Destination Discovery:** The app will allow users to search and discover popular travel destinations based on their interests, preferences, and travel style. Users can browse destinations by categories such as adventure, culture, food, and more.
 
