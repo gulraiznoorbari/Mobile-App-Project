@@ -1,0 +1,1 @@
+> **_Our Travel Planner App is designed for travelers of all ages and backgrounds who want to plan and manage their travels with ease. The app is ideal for individuals, families, and groups of friends who want a personalized travel experience that caters to their interests, preferences, and travel style._**
