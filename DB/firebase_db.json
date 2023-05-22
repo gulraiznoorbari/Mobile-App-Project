@@ -1,0 +1,163 @@
+{
+    "Users": {
+        "user_1": {
+            "userId": 1,
+            "name": "Gulraiz Noor Bari",
+            "email": "gulraiznoorbari@gmail.com",
+            "password": "fccollege123",
+            "Image": "picture.png"
+        },
+        "user_2": {
+            "userId": 2,
+            "name": "Muhammad Rabid Shahid",
+            "email": "rabidshahid@gmail.com",
+            "password": "123fccollege",
+            "Image": "picture.png"
+        }
+    },
+    "Travel Destination": {
+        "name": "Dubai",
+        "Image": "dubai.png",
+        "Hotels": [
+            {
+                "Image": "burjalarab.png",
+                "Favorite": true,
+                "name": "Burj Al Arab",
+                "location": "Jumeirah Beach Road, Dubai, United Arab Emirates",
+                "Room": {
+                    "name": "Royal Suite",
+                    "Image": "royalsuite.png",
+                    "Favorite": true,
+                    "price": 10000
+                }
+            },
+            {
+                "Image": "atlantis.png",
+                "Favorite": true,
+                "name": "Atlantis The Palm",
+                "location": "Crescent Road, Dubai, United Arab Emirates",
+                "Room": {
+                    "name": "Double Bed Room",
+                    "Favorite": true,
+                    "Image": "room_pic.png",
+                    "price": 12000
+                }
+            },
+            {
+                "Image": "jumeirah.png",
+                "Favorite": true,
+                "name": "Jumeirah Beach Hotel",
+                "location": "Jumeirah Beach Road, Dubai, United Arab Emirates",
+                "Room": {
+                    "name": "Single Bed Room",
+                    "Favorite": true,
+                    "Image": "room_pic.png",
+                    "price": 10000
+                }
+            }
+        ],
+        "Experiences": [
+            {
+                "Image": "desert_safari.png",
+                "Favorite": true,
+                "name": "Desert Safari",
+                "location": "Dubai, United Arab Emirates",
+                "price": 1000
+            },
+            {
+                "Image": "burj_khalifa.png",
+                "Favorite": true,
+                "name": "Burj Khalifa",
+                "location": "Dubai, United Arab Emirates",
+                "price": 2000
+            },
+            {
+                "Image": "dubai_mall.png",
+                "Favorite": true,
+                "name": "Dubai Mall",
+                "location": "Dubai, United Arab Emirates",
+                "price": 500
+            }
+        ],
+        "Restaurants": [
+            {
+                "Image": "cafe_image.png",
+                "Favorite": true,
+                "name": "Couqley French Bistro",
+                "location": "Emirates Mall, Dubai, United Arab Emirates",
+                "price": 1000
+            },
+            {
+                "Image": "Mc Donalds.png",
+                "Favorite": true,
+                "name": "Mc Donalds",
+                "location": "Dubai Mall, Dubai, United Arab Emirates",
+                "price": 500
+            },
+            {
+                "Image": "Nandos.png",
+                "Favorite": true,
+                "name": "Nandos",
+                "location": "Dubai Marina Mall, Dubai, United Arab Emirates",
+                "price": 500
+            }
+        ]
+    },
+    "Travel Article": {
+        "article_1": {
+            "Image": "article_image.png",
+            "title": "top 10 places to visit in dubai",
+            "content": "lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet"
+        },
+        "article_2": {
+            "Image": "article_image.png",
+            "title": "top 10 must-bring items to dubai while travelling",
+            "content": "lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet"
+        },
+        "article_3": {
+            "Image": "article_image.png",
+            "title": "Do's and Dont's in dubai",
+            "content": "lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet"
+        }
+    },
+    "Bookings": {
+        "booking_1": {
+            "userId": 1,
+            "Hotel": {
+                "name": "Burj Al Arab",
+                "Image": "burjalarab.png",
+                "Room": {
+                    "name": "Royal Suite",
+                    "Image": "royalsuite.png",
+                    "price": 10000
+                },
+                "checkin": "2019-12-12",
+                "checkout": "2019-12-15",
+                "adults": 2,
+                "children": 1,
+                "total": 30000
+            }
+        },
+        "booking_2": {
+            "userId": 2,
+            "Experience": {
+                "name": "Desert Safari",
+                "Image": "desert_safari.png",
+                "price": 1000,
+                "date": "2019-12-12",
+                "adults": 2,
+                "children": 1,
+                "total": 3000
+            },
+            "Restaurant": {
+                "name": "Couqley French Bistro",
+                "Image": "cafe_image.png",
+                "price": 1000,
+                "date": "2019-12-12",
+                "adults": 2,
+                "children": 1,
+                "total": 3000
+            }
+        }
+    }
+}
