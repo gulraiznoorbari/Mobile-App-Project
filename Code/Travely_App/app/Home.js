@@ -1,11 +1,13 @@
-import { Button, StyleSheet, Text, View } from "react-native";
 import { useState } from "react";
-
-import { auth } from "../firebase/config";
+import { Button, StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { signOut } from "firebase/auth";
 
-const Home = ({ setUserLoggedIn }) => {
+import { auth } from "../firebase/config";
+import Login from "./screens/Login";
+
+const Home = () => {
     const [errMessage, setErrMessage] = useState("");
+    const [userLoggedIn, setUserLoggedIn] = useState(false);
 
     const handleLogout = () => {
         signOut(auth)
@@ -20,15 +22,21 @@ const Home = ({ setUserLoggedIn }) => {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.heading}>Home</Text>
-            <View style={styles.buttonContainer}>
-                <Button title="Logout" onPress={handleLogout} />
-            </View>
-            <View style={styles.errorContainer}>
-                <Text style={styles.errorText}>{errMessage}</Text>
-            </View>
-        </View>
+        <>
+            {userLoggedIn ? (
+                <SafeAreaView style={styles.container}>
+                    <Text style={styles.heading}>Home</Text>
+                    <View style={styles.buttonContainer}>
+                        <Button title="Logout" onPress={handleLogout} />
+                    </View>
+                    <View style={styles.errorContainer}>
+                        <Text style={styles.errorText}>{errMessage}</Text>
+                    </View>
+                </SafeAreaView>
+            ) : (
+                <Login setUserLoggedIn={setUserLoggedIn} />
+            )}
+        </>
     );
 };
 

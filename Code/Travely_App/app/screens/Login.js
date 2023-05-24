@@ -1,43 +1,38 @@
-import { StyleSheet, Text, TextInput, View, Button, Pressable } from "react-native";
 import { useState } from "react";
+import { StyleSheet, Text, TextInput, View, Button, KeyboardAvoidingView } from "react-native";
+import { Link } from "expo-router";
+import { signInWithEmailAndPassword, browserLocalPersistence, setPersistence } from "firebase/auth";
 
-import { auth } from "../firebase/config";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase/config";
 
-const Signup = () => {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
+const Login = ({ setUserLoggedIn }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errMessage, setErrMessage] = useState("");
 
     const handleLogin = () => {
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                console.log(user);
-                setUserLoggedIn(true);
+        setPersistence(auth, browserLocalPersistence)
+            .then(() => {
+                return signInWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+                        console.log(user);
+                        setUserLoggedIn(true);
+                    })
+                    .catch((error) => {
+                        console.log(error.message);
+                        setErrMessage(error.message);
+                    });
             })
             .catch((error) => {
                 console.log(error.message);
                 setErrMessage(error.message);
             });
     };
+
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView behavior="padding" style={styles.container}>
             <Text style={styles.loginHeading}>Login</Text>
-            <TextInput
-                placeholder="Enter First Name"
-                value={firstName}
-                onChangeText={setFirstName}
-                style={styles.email}
-            />
-            <TextInput
-                placeholder="Enter Last Name"
-                value={lastName}
-                onChangeText={setLastName}
-                style={styles.email}
-            />
             <TextInput
                 placeholder="Enter Email"
                 value={email}
@@ -51,20 +46,21 @@ const Signup = () => {
                 secureTextEntry={true}
                 style={styles.password}
             />
-            <TextInput
-                placeholder="Re-enter Password"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry={true}
-                style={styles.password}
-            />
             <View style={styles.LoginButton}>
-                <Button title="Sign up" onPress={handleLogin} />
+                <Button title="Login" onPress={handleLogin} />
             </View>
             <View style={styles.errorContainer}>
                 <Text style={styles.errorText}>{errMessage}</Text>
             </View>
-        </View>
+            <View style={styles.footerView}>
+                <Text style={styles.footerText}>
+                    Don't have an account?
+                    <Link href={"/screens/Signup"} style={styles.footerLink} asChild>
+                        <Text>Sign up</Text>
+                    </Link>
+                </Text>
+            </View>
+        </KeyboardAvoidingView>
     );
 };
 
@@ -116,4 +112,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Signup;
+export default Login;

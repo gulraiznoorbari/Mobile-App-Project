@@ -1,32 +1,32 @@
-import {
-    StyleSheet,
-    Text,
-    TextInput,
-    View,
-    Button,
-    Pressable,
-    TouchableOpacity,
-} from "react-native";
 import { useState } from "react";
-import { Link, useRouter } from "expo-router";
+import { StyleSheet, Text, TextInput, View, Button, KeyboardAvoidingView } from "react-native";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
-import { auth } from "../firebase/config";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import Signup from "./Signup";
+import { auth } from "../../firebase/config";
+import { Redirect } from "expo-router";
 
-const Login = ({ setUserLoggedIn }) => {
+const Signup = () => {
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [errMessage, setErrMessage] = useState("");
 
-    const navigation = useRouter();
+    const matchPassword = () => {
+        password === confirmPassword ? handleSignup() : setErrMessage("Passwords do not match");
+    };
 
-    const handleLogin = () => {
-        signInWithEmailAndPassword(auth, email, password)
+    const signupSuccess = () => {
+        console.log("User registered successfully");
+    };
+
+    const handleSignup = () => {
+        createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                console.log(user);
-                setUserLoggedIn(true);
+                console.log(user.email);
+                signupSuccess();
             })
             .catch((error) => {
                 console.log(error.message);
@@ -35,8 +35,20 @@ const Login = ({ setUserLoggedIn }) => {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.loginHeading}>Login</Text>
+        <KeyboardAvoidingView behavior="padding" style={styles.container}>
+            <Text style={styles.loginHeading}>Sign up</Text>
+            <TextInput
+                placeholder="Enter First Name"
+                value={firstName}
+                onChangeText={setFirstName}
+                style={styles.email}
+            />
+            <TextInput
+                placeholder="Enter Last Name"
+                value={lastName}
+                onChangeText={setLastName}
+                style={styles.email}
+            />
             <TextInput
                 placeholder="Enter Email"
                 value={email}
@@ -50,21 +62,20 @@ const Login = ({ setUserLoggedIn }) => {
                 secureTextEntry={true}
                 style={styles.password}
             />
+            <TextInput
+                placeholder="Re-enter Password"
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                secureTextEntry={true}
+                style={styles.password}
+            />
             <View style={styles.LoginButton}>
-                <Button title="Login" onPress={handleLogin} />
+                <Button title="Sign up" onPress={matchPassword} />
             </View>
             <View style={styles.errorContainer}>
                 <Text style={styles.errorText}>{errMessage}</Text>
             </View>
-            <View style={styles.footerView}>
-                <Text style={styles.footerText}>
-                    Don't have an account?
-                    <Link href="./Signup">
-                        <Text style={styles.footerLink}>Sign up</Text>
-                    </Link>
-                </Text>
-            </View>
-        </View>
+        </KeyboardAvoidingView>
     );
 };
 
@@ -116,4 +127,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Login;
+export default Signup;
