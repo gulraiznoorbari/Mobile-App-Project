@@ -1,28 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "expo-router";
 import { StyleSheet, Text, TextInput, View, Button, KeyboardAvoidingView } from "react-native";
 import { Link } from "expo-router";
-import { signInWithEmailAndPassword, browserLocalPersistence, setPersistence } from "firebase/auth";
+import {
+    signInWithEmailAndPassword,
+    browserLocalPersistence,
+    setPersistence,
+    onAuthStateChanged,
+} from "firebase/auth";
 
 import { auth } from "../../firebase/config";
 
-const Login = ({ setUserLoggedIn }) => {
+const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errMessage, setErrMessage] = useState("");
+    const navigation = useRouter();
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                navigation.push("Home");
+                console.log("User logged in");
+            }
+        });
+        return unsubscribe;
+    }, []);
 
     const handleLogin = () => {
         setPersistence(auth, browserLocalPersistence)
-            .then(() => {
-                return signInWithEmailAndPassword(auth, email, password)
-                    .then((userCredential) => {
-                        const user = userCredential.user;
-                        console.log(user);
-                        setUserLoggedIn(true);
-                    })
-                    .catch((error) => {
-                        console.log(error.message);
-                        setErrMessage(error.message);
-                    });
+            .then(async () => {
+                try {
+                    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                    const user = userCredential.user;
+                    console.log(user);
+                } catch (error) {
+                    console.log(error.message);
+                    setErrMessage(error.message);
+                }
             })
             .catch((error) => {
                 console.log(error.message);

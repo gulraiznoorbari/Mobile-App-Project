@@ -1,9 +1,9 @@
 import { useState } from "react";
+import { useRouter } from "expo-router";
 import { StyleSheet, Text, TextInput, View, Button, KeyboardAvoidingView } from "react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 import { auth } from "../../firebase/config";
-import { Redirect } from "expo-router";
 
 const Signup = () => {
     const [firstName, setFirstName] = useState("");
@@ -12,6 +12,7 @@ const Signup = () => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errMessage, setErrMessage] = useState("");
+    const navigation = useRouter();
 
     const matchPassword = () => {
         password === confirmPassword ? handleSignup() : setErrMessage("Passwords do not match");
@@ -19,6 +20,7 @@ const Signup = () => {
 
     const signupSuccess = () => {
         console.log("User registered successfully");
+        navigation.push("Home");
     };
 
     const handleSignup = () => {

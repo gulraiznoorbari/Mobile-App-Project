@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "expo-router";
 import { Button, StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { signOut } from "firebase/auth";
 
@@ -7,13 +8,13 @@ import Login from "./screens/Login";
 
 const Home = () => {
     const [errMessage, setErrMessage] = useState("");
-    const [userLoggedIn, setUserLoggedIn] = useState(false);
+    const navigation = useRouter();
 
     const handleLogout = () => {
         signOut(auth)
             .then(() => {
                 console.log("User signed out!");
-                setUserLoggedIn(false);
+                navigation.replace("screens/Login");
             })
             .catch((error) => {
                 console.log(error.message);
@@ -23,9 +24,10 @@ const Home = () => {
 
     return (
         <>
-            {userLoggedIn ? (
+            {auth.currentUser ? (
                 <SafeAreaView style={styles.container}>
-                    <Text style={styles.heading}>Home</Text>
+                    <Text style={styles.heading}>Welcome to Travely!</Text>
+                    <Text style={styles.subheading}>Email: {auth.currentUser.email}</Text>
                     <View style={styles.buttonContainer}>
                         <Button title="Logout" onPress={handleLogout} />
                     </View>
@@ -34,7 +36,7 @@ const Home = () => {
                     </View>
                 </SafeAreaView>
             ) : (
-                <Login setUserLoggedIn={setUserLoggedIn} />
+                navigation.replace("screens/Login")
             )}
         </>
     );
@@ -50,8 +52,15 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center",
     },
+    subheading: {
+        fontSize: 16,
+        fontWeight: "bold",
+        textAlign: "center",
+        marginTop: 20,
+    },
     buttonContainer: {
         marginTop: 20,
+        padding: 20,
     },
     errorText: {
         color: "red",
