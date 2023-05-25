@@ -53,24 +53,28 @@ const Signup = () => {
                 placeholder="Enter First Name"
                 value={firstName}
                 onChangeText={setFirstName}
+                keyboardType="default"
                 style={styles.email}
             />
             <TextInput
                 placeholder="Enter Last Name"
                 value={lastName}
                 onChangeText={setLastName}
+                keyboardType="default"
                 style={styles.email}
             />
             <TextInput
                 placeholder="Enter Email"
                 value={email}
                 onChangeText={setEmail}
+                keyboardType="email-address"
                 style={styles.email}
             />
             <TextInput
                 placeholder="Enter Password"
                 value={password}
                 onChangeText={setPassword}
+                keyboardType="default"
                 secureTextEntry={true}
                 style={styles.password}
             />
@@ -78,6 +82,7 @@ const Signup = () => {
                 placeholder="Re-enter Password"
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
+                keyboardType="default"
                 secureTextEntry={true}
                 style={styles.password}
             />

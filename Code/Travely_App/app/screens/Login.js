@@ -32,8 +32,6 @@ const Login = () => {
             .then(async () => {
                 try {
                     const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                    const user = userCredential.user;
-                    console.log(user);
                 } catch (error) {
                     console.log(error.message);
                     setErrMessage(error.message);
@@ -52,12 +50,14 @@ const Login = () => {
                 placeholder="Enter Email"
                 value={email}
                 onChangeText={setEmail}
+                keyboardType="email-address"
                 style={styles.email}
             />
             <TextInput
                 placeholder="Enter Password"
                 value={password}
                 onChangeText={setPassword}
+                keyboardType="default"
                 secureTextEntry={true}
                 style={styles.password}
             />
