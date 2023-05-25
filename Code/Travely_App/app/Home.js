@@ -1,14 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "expo-router";
 import { Button, StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { signOut } from "firebase/auth";
 
 import { auth } from "../firebase/config";
-import Login from "./screens/Login";
+import { getUserData } from "../firebase/utils";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebase/config";
 
 const Home = () => {
+    const [userFirstName, setUserFirstName] = useState("");
+    const [userLastName, setUserLastName] = useState("");
+    const [userEmail, setUserEmail] = useState("");
     const [errMessage, setErrMessage] = useState("");
     const navigation = useRouter();
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const userData = await getUserData(auth.currentUser.uid);
+                console.log(userData);
+                if (userData) {
+                    setUserFirstName(userData.FirstName);
+                    setUserLastName(userData.LastName);
+                    setUserEmail(userData.Email);
+                }
+            } catch (error) {
+                console.log(error.message);
+                setErrMessage(error.message);
+            }
+        };
+        if (auth.currentUser) {
+            fetchUserData();
+        }
+    }, []);
 
     const handleLogout = () => {
         signOut(auth)
@@ -27,7 +52,11 @@ const Home = () => {
             {auth.currentUser ? (
                 <SafeAreaView style={styles.container}>
                     <Text style={styles.heading}>Welcome to Travely!</Text>
-                    <Text style={styles.subheading}>Email: {auth.currentUser.email}</Text>
+                    <Text style={styles.subheading}>
+                        Name: {userFirstName + " " + userLastName}
+                    </Text>
+                    <Text style={styles.subheading}>Email: {userEmail}</Text>
+                    {/* <Text style={styles.subheading}>Email: {auth.currentUser.email}</Text> */}
                     <View style={styles.buttonContainer}>
                         <Button title="Logout" onPress={handleLogout} />
                     </View>
