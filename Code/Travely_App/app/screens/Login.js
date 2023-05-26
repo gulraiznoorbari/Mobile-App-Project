@@ -10,6 +10,7 @@ import {
 } from "firebase/auth";
 
 import { auth } from "../../firebase/config";
+import GoogleAuth from "../../components/GoogleAuth";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -75,6 +76,7 @@ const Login = () => {
                     </Link>
                 </Text>
             </View>
+            <GoogleAuth />
         </KeyboardAvoidingView>
     );
 };

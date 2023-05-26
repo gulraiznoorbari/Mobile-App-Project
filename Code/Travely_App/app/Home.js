@@ -5,8 +5,6 @@ import { signOut } from "firebase/auth";
 
 import { auth } from "../firebase/config";
 import { getUserData } from "../firebase/utils";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../firebase/config";
 
 const Home = () => {
     const [userFirstName, setUserFirstName] = useState("");
