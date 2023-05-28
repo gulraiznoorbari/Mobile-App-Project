@@ -1,7 +1,7 @@
 import "expo-dev-client";
 import { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
-import { StyleSheet, Text, Pressable, View } from "react-native";
+import { StyleSheet, Text, Pressable, View, Image } from "react-native";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { GOOGLE_SIGNIN_CLIENT_WEB_ID } from "@env";
 import auth from "@react-native-firebase/auth";
@@ -9,7 +9,7 @@ import auth from "@react-native-firebase/auth";
 const GoogleAuth = () => {
     // Set an initializing state whilst Firebase connects
     const [initializing, setInitializing] = useState(true);
-    const [user, setUser] = useState();
+    const [user, setUser] = useState(null);
     const navigation = useRouter();
 
     GoogleSignin.configure({
@@ -17,44 +17,45 @@ const GoogleAuth = () => {
     });
 
     // Handle user state changes
-    function onAuthStateChanged(user) {
-        setUser(user);
-        if (initializing) setInitializing(false);
-    }
-
     useEffect(() => {
-        const subscriber = onAuthStateChanged(onAuthStateChanged);
-        return subscriber;
+        const subscriber = auth().onAuthStateChanged((user) => {
+            setUser(user);
+            if (initializing) setInitializing(false);
+        });
+        return subscriber; // unsubscribe on unmount
     }, []);
 
     if (initializing) return null;
 
     const onGoogleButtonPress = async () => {
-        // Check if your device supports Google Play
-        await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-        // Get the users ID token
-        const { idToken } = await GoogleSignin.signIn();
-        // Create a Google credential with the token
-        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-        // Sign-in the user with the credential
-
-        const user_signin = auth().signInWithCredential(googleCredential);
-        user_signin
-            .then((user) => {
-                console.log(user);
-                navigation.push("/");
-                console.log("User signed in");
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        try {
+            // Check if your device supports Google Play
+            await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+            // Get the users ID token
+            const { idToken } = await GoogleSignin.signIn();
+            // Create a Google credential with the token
+            const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+            // Sign-in the user with the credential
+            const user_signin = auth().signInWithCredential(googleCredential);
+            user_signin
+                .then((user) => {
+                    console.log(user);
+                    navigation.push("/");
+                    console.log("User signed in");
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const signOut = async () => {
         try {
             await GoogleSignin.revokeAccess();
             await auth().signOut();
-            setUser(null); // Remember to remove the user from your app's state as well
+            setUser(null);
         } catch (error) {
             console.error(error);
         }
@@ -75,10 +76,13 @@ const GoogleAuth = () => {
     return (
         <View>
             <Text>Welcome {user.displayName}</Text>
-            <Image
-                source={{ uri: user.photoURL }}
-                style={{ width: 50, height: 50, borderRadius: 50 }}
-            />
+            {user.photoURL && (
+                <Image
+                    source={{ uri: user.photoURL }}
+                    style={{ width: 50, height: 50, borderRadius: 50 }}
+                />
+            )}
+
             <Pressable onPress={() => signOut()} style={styles.button}>
                 <Text style={styles.buttonText}>Sign Out</Text>
             </Pressable>
