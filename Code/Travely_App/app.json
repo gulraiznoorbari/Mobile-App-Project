@@ -1,16 +1,20 @@
 {
-  "expo": {
-    "scheme": "acme",
-    "web": {
-      "bundler": "metro"
-    },
-    "name": "Travely_App",
-    "slug": "travely",
-    "extra": {
-      "eas": {
-        "projectId": "7787ccbb-7bbf-43ca-b9d8-2867e2bda1b1"
-      }
-    },
-    "owner": "gulraizzz"
-  }
+    "expo": {
+        "scheme": "acme",
+        "web": {
+            "bundler": "metro"
+        },
+        "name": "Travely_App",
+        "slug": "travely",
+        "plugins": ["@react-native-google-signin/google-signin"],
+        "extra": {
+            "eas": {
+                "projectId": "7787ccbb-7bbf-43ca-b9d8-2867e2bda1b1"
+            }
+        },
+        "android": {
+            "package": "com.gulraizzz.travely",
+            "googleServicesFile": "./google-services.json"
+        }
+    }
 }

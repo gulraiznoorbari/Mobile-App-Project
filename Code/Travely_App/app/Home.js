@@ -5,13 +5,14 @@ import { signOut } from "firebase/auth";
 
 import { auth } from "../firebase/config";
 import { getUserData } from "../firebase/utils";
+import Login from "./screens/Login";
 
 const Home = () => {
     const [userFirstName, setUserFirstName] = useState("");
     const [userLastName, setUserLastName] = useState("");
     const [userEmail, setUserEmail] = useState("");
     const [errMessage, setErrMessage] = useState("");
-    const navigation = useRouter();
+    const router = useRouter();
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -37,7 +38,7 @@ const Home = () => {
         signOut(auth)
             .then(() => {
                 console.log("User signed out!");
-                navigation.replace("screens/Login");
+                router.push("screens/Login");
             })
             .catch((error) => {
                 console.log(error.message);
@@ -54,16 +55,15 @@ const Home = () => {
                         Name: {userFirstName + " " + userLastName}
                     </Text>
                     <Text style={styles.subheading}>Email: {userEmail}</Text>
-                    {/* <Text style={styles.subheading}>Email: {auth.currentUser.email}</Text> */}
                     <View style={styles.buttonContainer}>
-                        <Button title="Logout" onPress={handleLogout} />
+                        <Button title="Logout" onPress={() => handleLogout()} />
                     </View>
                     <View style={styles.errorContainer}>
                         <Text style={styles.errorText}>{errMessage}</Text>
                     </View>
                 </SafeAreaView>
             ) : (
-                navigation.replace("screens/Login")
+                <Login />
             )}
         </>
     );
