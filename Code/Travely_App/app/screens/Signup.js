@@ -22,7 +22,7 @@ const Signup = () => {
 
     const signupSuccess = () => {
         console.log("User registered successfully");
-        navigation.push("Home");
+        navigation.push("/");
     };
 
     const AddUserToDB = async (user) => {
@@ -41,8 +41,18 @@ const Signup = () => {
                 signupSuccess();
             })
             .catch((error) => {
-                console.log(error.message);
-                setErrMessage(error.message);
+                if (error.code === "auth/email-already-in-use") {
+                    setErrMessage("That email address is already in use!");
+                }
+                if (error.code === "auth/invalid-email") {
+                    setErrMessage("That email address is invalid!");
+                }
+                if (error.code === "auth/weak-password") {
+                    setErrMessage("Password should be at least 6 characters");
+                } else {
+                    console.log(error);
+                    setErrMessage("Something went wrong, check console");
+                }
             });
     };
 

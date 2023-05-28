@@ -4,7 +4,7 @@ import { StatusBar } from "expo-status-bar";
 const Layout = () => {
     return (
         <>
-            <StatusBar style="auto" animated={true} />
+            <StatusBar style="inverted" animated={true} />
             <Stack initialRouteName="index" screenOptions={{ headerShown: false }} />
         </>
     );

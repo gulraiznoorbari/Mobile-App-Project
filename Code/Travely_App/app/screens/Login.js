@@ -1,13 +1,7 @@
 import { useEffect, useState } from "react";
-import { useRouter } from "expo-router";
+import { useRouter, Link } from "expo-router";
 import { StyleSheet, Text, TextInput, View, Button, KeyboardAvoidingView } from "react-native";
-import { Link } from "expo-router";
-import {
-    signInWithEmailAndPassword,
-    browserLocalPersistence,
-    setPersistence,
-    onAuthStateChanged,
-} from "firebase/auth";
+import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 
 import { auth } from "../../firebase/config";
 import GoogleAuth from "../../components/GoogleAuth";
@@ -21,7 +15,7 @@ const Login = () => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
-                navigation.push("Home");
+                navigation.push("/");
                 console.log("User logged in");
             }
         });
@@ -29,18 +23,24 @@ const Login = () => {
     }, []);
 
     const handleLogin = () => {
-        setPersistence(auth, browserLocalPersistence)
-            .then(async () => {
-                try {
-                    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                } catch (error) {
-                    console.log(error.message);
-                    setErrMessage(error.message);
-                }
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                // console.log("User logged in");
             })
             .catch((error) => {
-                console.log(error.message);
-                setErrMessage(error.message);
+                if (error.code === "auth/invalid-email") {
+                    console.log("That email address is invalid!");
+                }
+                if (error.code === "auth/user-not-found") {
+                    setErrMessage("User not found");
+                }
+                if (error.code === "auth/wrong-password") {
+                    setErrMessage("Wrong password");
+                } else {
+                    console.log(error);
+                    setErrMessage("Something went wrong, check console");
+                }
             });
     };
 
@@ -70,8 +70,8 @@ const Login = () => {
             </View>
             <View style={styles.footerView}>
                 <Text style={styles.footerText}>
-                    Don't have an account?
-                    <Link href={"/screens/Signup"} style={styles.footerLink} asChild>
+                    Don't have an account? <Text> </Text>
+                    <Link href={"/screens/Signup"} style={styles.footerLink}>
                         <Text>Sign up</Text>
                     </Link>
                 </Text>
