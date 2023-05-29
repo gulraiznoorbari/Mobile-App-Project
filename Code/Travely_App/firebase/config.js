@@ -2,7 +2,7 @@
 import { FIREBASE_API_KEY, FIREBASE_APP_ID } from "@env";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -17,8 +17,5 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+export const authentication = getAuth(app);
 export const db = getFirestore(app);
-
-// Google Auth Provider
-export const googleProvider = new GoogleAuthProvider(app);

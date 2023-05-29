@@ -1,16 +1,16 @@
 import "expo-dev-client";
 import { useEffect, useState } from "react";
-import { useRouter } from "expo-router";
+import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text, Pressable, View, Image } from "react-native";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { GOOGLE_SIGNIN_CLIENT_WEB_ID } from "@env";
 import auth from "@react-native-firebase/auth";
 
-const GoogleAuth = () => {
+const GoogleAuth = ({ setUserGoogleLogin }) => {
     // Set an initializing state whilst Firebase connects
     const [initializing, setInitializing] = useState(true);
     const [user, setUser] = useState(null);
-    const navigation = useRouter();
+    const navigation = useNavigation();
 
     GoogleSignin.configure({
         webClientId: GOOGLE_SIGNIN_CLIENT_WEB_ID,
@@ -40,7 +40,8 @@ const GoogleAuth = () => {
             user_signin
                 .then((user) => {
                     console.log(user);
-                    navigation.push("/");
+                    setUserGoogleLogin(true);
+                    navigation.navigate("Home");
                     console.log("User signed in");
                 })
                 .catch((error) => {
@@ -51,11 +52,13 @@ const GoogleAuth = () => {
         }
     };
 
-    const signOut = async () => {
+    const googleSignOut = async () => {
         try {
             await GoogleSignin.revokeAccess();
             await auth().signOut();
+            setUserGoogleLogin(false);
             setUser(null);
+            navigation.navigate("Login");
         } catch (error) {
             console.error(error);
         }
@@ -83,7 +86,7 @@ const GoogleAuth = () => {
                 />
             )}
 
-            <Pressable onPress={() => signOut()} style={styles.button}>
+            <Pressable onPress={googleSignOut} style={styles.button}>
                 <Text style={styles.buttonText}>Sign Out</Text>
             </Pressable>
         </View>
