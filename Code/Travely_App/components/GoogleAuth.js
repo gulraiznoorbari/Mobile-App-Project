@@ -86,13 +86,13 @@ const GoogleAuth = ({ setUserGoogleLogin }) => {
         //         />
         //     )}
 
-        <TouchableOpacity
+        <Pressable
             style={styles.googleButtonContainer}
-            onPress={console.log("Signed in with Google!")}
+            onPress={() => console.log("Signed in with Google!")}
         >
             <Image source={require("../assets/images/Google.png")} style={styles.googleIcon} />
             <Text style={styles.googleButtonText}>Continue with Google</Text>
-        </TouchableOpacity>
+        </Pressable>
         //    <Pressable onPress={googleSignOut} style={styles.button}>
         //        <Text style={styles.buttonText}>Sign Out</Text>
         //    </Pressable>
