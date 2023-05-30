@@ -10,7 +10,7 @@ const SubHeading = ({ text }) => {
 
 const styles = StyleSheet.create({
     subHeading: {
-        fontSize: 22,
+        fontSize: 24,
         fontWeight: "800",
         textAlign: "center",
         marginHorizontal: 70,

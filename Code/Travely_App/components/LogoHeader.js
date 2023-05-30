@@ -12,13 +12,11 @@ const styles = StyleSheet.create({
     logoContainer: {
         padding: 35,
         backgroundColor: "#003580",
-        fontFamily: "Poppins-Bold",
-        fontSize: 35,
-        fontWeight: "bold",
         textAlign: "center",
     },
     logoHeading: {
-        fontSize: 30,
+        fontFamily: "Poppins-Bold",
+        fontSize: 32,
         fontWeight: "bold",
         textAlign: "center",
         color: "#fff",
