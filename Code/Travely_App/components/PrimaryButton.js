@@ -1,11 +1,11 @@
-import { StyleSheet, Text, Pressable } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 
 const PrimaryButton = ({ text, action }) => {
     return (
-        <Pressable style={styles.buttonContainer} onPress={action}>
+        <TouchableOpacity style={styles.buttonContainer} onPress={action}>
             <Text style={styles.buttonText}>{text}</Text>
-        </Pressable>
+        </TouchableOpacity>
     );
 };
 
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#003580",
         padding: 10,
         marginHorizontal: 20,
-        marginTop: 20,
+        marginTop: 15,
         borderRadius: 50,
     },
     buttonText: {
