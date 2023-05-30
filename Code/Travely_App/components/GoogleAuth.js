@@ -1,7 +1,7 @@
 import "expo-dev-client";
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, Text, Pressable, View, Image } from "react-native";
+import { StyleSheet, Text, Pressable, View, Image, TouchableOpacity } from "react-native";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { GOOGLE_SIGNIN_CLIENT_WEB_ID } from "@env";
 import auth from "@react-native-firebase/auth";
@@ -64,53 +64,63 @@ const GoogleAuth = ({ setUserGoogleLogin }) => {
         }
     };
 
-    if (!user) {
-        return (
-            <Pressable
-                onPress={() =>
-                    onGoogleButtonPress().then(() => console.log("Signed in with Google!"))
-                }
-                style={styles.button}
-            >
-                <Text style={styles.buttonText}>Continue with Google</Text>
-            </Pressable>
-        );
-    }
+    // if (!user) {
+    //     return (
+    //         <Pressable
+    //             onPress={() =>
+    //                 onGoogleButtonPress().then(() => console.log("Signed in with Google!"))
+    //             }
+    //             style={styles.button}
+    //         >
+    //             <Text style={styles.buttonText}>Continue with Google</Text>
+    //         </Pressable>
+    //     );
+    // }
     return (
-        <View>
-            <Text>Welcome {user.displayName}</Text>
-            {user.photoURL && (
-                <Image
-                    source={{ uri: user.photoURL }}
-                    style={{ width: 50, height: 50, borderRadius: 50 }}
-                />
-            )}
+        //<View>
+        //    <Text>Welcome {user.displayName}</Text>
+        //     {user.photoURL && (
+        //         <Image
+        //             source={{ uri: user.photoURL }}
+        //             style={{ width: 50, height: 50, borderRadius: 50 }}
+        //         />
+        //     )}
 
-            <Pressable onPress={googleSignOut} style={styles.button}>
-                <Text style={styles.buttonText}>Sign Out</Text>
-            </Pressable>
-        </View>
+        <TouchableOpacity
+            style={styles.googleButtonContainer}
+            onPress={console.log("Signed in with Google!")}
+        >
+            <Image source={require("../assets/images/Google.png")} style={styles.googleIcon} />
+            <Text style={styles.googleButtonText}>Continue with Google</Text>
+        </TouchableOpacity>
+        //    <Pressable onPress={googleSignOut} style={styles.button}>
+        //        <Text style={styles.buttonText}>Sign Out</Text>
+        //    </Pressable>
+        //</View>
     );
 };
 
 const styles = StyleSheet.create({
-    button: {
-        backgroundColor: "#181818",
-        borderRadius: 5,
-        padding: 10,
-        elevation: 2,
-        width: 300,
-        height: 50,
+    googleButtonContainer: {
+        flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 10,
+        backgroundColor: "#181818",
+        padding: 10,
+        marginHorizontal: 20,
+        borderRadius: 50,
+        marginTop: 20,
     },
-    buttonText: {
+    googleIcon: {
+        width: 25,
+        height: 25,
+        marginRight: 20,
+    },
+    googleButtonText: {
         fontSize: 16,
-        color: "#ffffff",
         fontWeight: "bold",
-        alignSelf: "center",
-        textTransform: "uppercase",
+        textAlign: "center",
+        color: "#fff",
     },
 });
 
