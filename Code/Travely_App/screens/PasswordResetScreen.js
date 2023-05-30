@@ -61,7 +61,7 @@ const PasswordResetScreen = ({ navigation }) => {
                 setValue={setEmail}
                 hideInput={false}
             />
-            {errMessage && <ErrorMessage message={errMessage} marginVertical={15} />}
+            {errMessage && <ErrorMessage message={errMessage} marginVertical={10} />}
             <PrimaryButton text={"Reset Password"} action={handleResetPassword} />
             <View style={styles.SignupOptionContainer}>
                 <Text style={styles.SignupOptionText}>
