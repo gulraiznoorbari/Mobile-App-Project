@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { StyleSheet, Text, View, KeyboardAvoidingView } from "react-native";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 
