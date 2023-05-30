@@ -73,8 +73,8 @@ const SignUpScreen = () => {
     };
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false}>
-            <KeyboardAvoidingView behavior="padding">
+        <KeyboardAvoidingView behavior="height">
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <LogoHeader text={"Travely."} />
                 <SubHeading text={"Become a Travely member."} />
                 <InputField
@@ -120,8 +120,8 @@ const SignUpScreen = () => {
                     </Text>
                 </View>
                 <UserAgreement status={"creating a account"} />
-            </KeyboardAvoidingView>
-        </ScrollView>
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
 };
 
