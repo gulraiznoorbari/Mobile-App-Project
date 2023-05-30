@@ -1,3 +1,4 @@
+import { Button } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "react-native";
@@ -16,7 +17,22 @@ const App = () => {
                 <Stack.Screen name="Home" component={HomeScreen} />
                 <Stack.Screen name="Login" component={LoginScreen} />
                 <Stack.Screen name="SignUp" component={SignUpScreen} />
-                <Stack.Screen name="PasswordReset" component={PasswordResetScreen} />
+                <Stack.Screen
+                    name="PasswordReset"
+                    component={PasswordResetScreen}
+                    options={{
+                        headerTitle: "Reset Password",
+                        headerShown: true,
+                        headerStyle: {
+                            backgroundColor: "#003580",
+                        },
+                        headerTintColor: "#fff",
+                        headerTitleStyle: {
+                            fontWeight: "bold",
+                        },
+                        headerBackTitleVisible: false,
+                    }}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     );
