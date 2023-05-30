@@ -12,7 +12,6 @@ import InputField from "../components/InputField";
 import ErrorMessage from "../components/ErrorMessage";
 import PrimaryButton from "../components/PrimaryButton";
 import TextLink from "../components/TextLink";
-import TextLinkIcon from "../components/TextLinkIcon";
 import UserAgreement from "../components/UserAgreement";
 
 const LoginScreen = () => {
@@ -83,11 +82,7 @@ const LoginScreen = () => {
             <PrimaryButton text="Sign In" action={handleLogin} />
             <View style={styles.extraOptions}>
                 <TextLink text="Create Account" redirectTo="/SignUp" />
-                <TextLinkIcon
-                    text="Forgot Password?"
-                    redirectTo="/PasswordReset"
-                    icon={<MaterialCommunityIcons name="lock-outline" size={17} color="#003580" />}
-                />
+                <TextLink text="Forgot Password?" redirectTo="/PasswordReset" />
             </View>
             <View style={styles.dividerContainer}>
                 <View style={styles.divider}></View>
