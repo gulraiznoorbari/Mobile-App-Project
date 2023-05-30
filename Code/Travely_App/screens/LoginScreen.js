@@ -62,7 +62,7 @@ const LoginScreen = () => {
     };
 
     return (
-        <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        <KeyboardAvoidingView behavior="padding">
             <LogoHeader text="Travely." />
             <SubHeading text="Sign in to unlock the best of Travely." />
             <InputField
