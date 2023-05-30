@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         marginTop: 75,
+        marginBottom: 10,
         paddingHorizontal: 20,
     },
     agreementText: {
