@@ -32,6 +32,7 @@ const LoginScreen = () => {
     const resetUser = () => {
         setEmail("");
         setPassword("");
+        setErrMessage("");
     };
 
     const handleLogin = () => {
@@ -77,7 +78,7 @@ const LoginScreen = () => {
                 setValue={setPassword}
                 hideInput={true}
             />
-            {errMessage && <ErrorMessage errorMessage={errMessage} marginVertical={15} />}
+            {errMessage && <ErrorMessage errorMessage={errMessage} marginVertical={10} />}
             <PrimaryButton text="Sign In" action={handleLogin} />
             <View style={styles.extraOptions}>
                 <TextLink text="Create Account" redirectTo="/SignUp" />
