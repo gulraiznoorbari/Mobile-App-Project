@@ -1,10 +1,25 @@
 import { useState } from "react";
-import { StyleSheet, Text, TextInput, View, Button, KeyboardAvoidingView } from "react-native";
+import {
+    StyleSheet,
+    Text,
+    TextInput,
+    View,
+    Button,
+    KeyboardAvoidingView,
+    ScrollView,
+} from "react-native";
 import { useNavigation, Link } from "@react-navigation/native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 
 import { authentication, db } from "../firebase/config";
+import LogoHeader from "../components/LogoHeader";
+import SubHeading from "../components/SubHeading";
+import InputField from "../components/InputField";
+import ErrorMessage from "../components/ErrorMessage";
+import PrimaryButton from "../components/PrimaryButton";
+import TextLink from "../components/TextLink";
+import UserAgreement from "../components/UserAgreement";
 
 const SignUpScreen = () => {
     const [firstName, setFirstName] = useState("");
@@ -66,108 +81,66 @@ const SignUpScreen = () => {
     };
 
     return (
-        <KeyboardAvoidingView behavior="padding" style={styles.container}>
-            <Text style={styles.loginHeading}>Sign up</Text>
-            <TextInput
-                placeholder="Enter First Name"
-                value={firstName}
-                onChangeText={setFirstName}
-                keyboardType="default"
-                style={styles.email}
-            />
-            <TextInput
-                placeholder="Enter Last Name"
-                value={lastName}
-                onChangeText={setLastName}
-                keyboardType="default"
-                style={styles.email}
-            />
-            <TextInput
-                placeholder="Enter Email"
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                style={styles.email}
-            />
-            <TextInput
-                placeholder="Enter Password"
-                value={password}
-                onChangeText={setPassword}
-                keyboardType="default"
-                secureTextEntry={true}
-                style={styles.password}
-            />
-            <TextInput
-                placeholder="Re-enter Password"
-                value={confirmPassword}
-                onChangeText={setConfirmPassword}
-                keyboardType="default"
-                secureTextEntry={true}
-                style={styles.password}
-            />
-            <View style={styles.LoginButton}>
-                <Button title="Sign up" onPress={matchPassword} />
-            </View>
-            <View style={styles.errorContainer}>
-                <Text style={styles.errorText}>{errMessage}</Text>
-            </View>
-            <View style={styles.footerView}>
-                <Text style={styles.footerText}>
-                    Already a member? <Text> </Text>
-                    <Link to={"/Login"} style={styles.footerLink}>
-                        <Text>Log in</Text>
-                    </Link>
-                </Text>
-            </View>
-        </KeyboardAvoidingView>
+        <ScrollView showsVerticalScrollIndicator={false}>
+            <KeyboardAvoidingView behavior="padding">
+                <LogoHeader text={"Travely."} />
+                <SubHeading text={"Become a Travely member."} />
+                <InputField
+                    label={"First Name"}
+                    placeholder={"Enter First Name"}
+                    value={firstName}
+                    onChangeText={setFirstName}
+                    hideInput={false}
+                />
+                <InputField
+                    label={"Last Name"}
+                    placeholder={"Enter Last Name"}
+                    value={lastName}
+                    onChangeText={setLastName}
+                    hideInput={false}
+                />
+                <InputField
+                    label={"Email"}
+                    placeholder={"Enter Email"}
+                    value={email}
+                    onChangeText={setEmail}
+                    hideInput={false}
+                />
+                <InputField
+                    label={"Password"}
+                    placeholder={"Enter Password"}
+                    value={password}
+                    onChangeText={setPassword}
+                    hideInput={true}
+                />
+                {errMessage && <ErrorMessage errorMessage={errMessage} marginVertical={15} />}
+                <InputField
+                    label={"Confirm Password"}
+                    placeholder={"Re-enter Password"}
+                    value={confirmPassword}
+                    onChangeText={setConfirmPassword}
+                    hideInput={true}
+                />
+                <PrimaryButton text={"Sign up"} onPress={matchPassword} />
+                <View style={styles.LoginOptionContainer}>
+                    <Text style={styles.LoginOptionText}>
+                        Already a member? <TextLink text={"Login"} redirectTo={"/Login"} />
+                    </Text>
+                </View>
+                <UserAgreement status={"creating a account"} />
+            </KeyboardAvoidingView>
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        padding: 20,
-        marginTop: 50,
-    },
-    loginHeading: {
-        fontSize: 30,
-        fontWeight: "bold",
-        textAlign: "center",
-    },
-    email: {
-        height: 40,
-        borderColor: "gray",
-        borderWidth: 1,
-        marginTop: 20,
-        padding: 10,
-    },
-    password: {
-        height: 40,
-        borderColor: "gray",
-        borderWidth: 1,
-        marginTop: 20,
-        padding: 10,
-    },
-    LoginButton: {
-        marginTop: 20,
-    },
-    errorText: {
-        color: "red",
-    },
-    errorContainer: {
-        height: 20,
-    },
-    footerView: {
+    LoginOptionContainer: {
         alignItems: "center",
-        marginTop: 20,
+        marginTop: 10,
     },
-    footerText: {
+    LoginOptionText: {
         fontSize: 14,
         color: "#2e2e2d",
-    },
-    footerLink: {
-        color: "#788eec",
-        fontWeight: "bold",
-        fontSize: 16,
     },
 });
 
