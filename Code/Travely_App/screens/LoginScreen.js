@@ -70,12 +70,14 @@ const LoginScreen = () => {
                 placeholder="Enter Email Address"
                 value={email}
                 setValue={setEmail}
+                hideInput={false}
             />
             <InputField
                 label="Password"
                 placeholder="Enter Password"
                 value={password}
                 setValue={setPassword}
+                hideInput={true}
             />
             {errMessage && <ErrorMessage errorMessage={errMessage} marginVertical={15} />}
             <PrimaryButton text="Sign In" action={handleLogin} />
