@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TextInput } from "react-native";
 
-const InputField = ({ label, placeholder, value, setValue }) => {
+const InputField = ({ label, placeholder, value, setValue, hideInput }) => {
     return (
         <View style={styles.InputContainer}>
             <Text style={styles.label}>{label}</Text>
@@ -9,7 +9,7 @@ const InputField = ({ label, placeholder, value, setValue }) => {
                 placeholderTextColor={"#9B9B9B"}
                 value={value}
                 onChangeText={setValue}
-                keyboardType="email-address"
+                secureTextEntry={hideInput}
                 style={styles.InputField}
             />
         </View>
