@@ -1,14 +1,6 @@
 import { useState } from "react";
-import {
-    StyleSheet,
-    Text,
-    TextInput,
-    View,
-    Button,
-    KeyboardAvoidingView,
-    ScrollView,
-} from "react-native";
-import { useNavigation, Link } from "@react-navigation/native";
+import { StyleSheet, Text, View, KeyboardAvoidingView, ScrollView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 
@@ -75,7 +67,7 @@ const SignUpScreen = () => {
                     setErrMessage("Password should be at least 6 characters");
                 } else {
                     console.log(error);
-                    setErrMessage("Something went wrong, check console");
+                    setErrMessage("Something went wrong, try again.");
                 }
             });
     };
@@ -89,36 +81,36 @@ const SignUpScreen = () => {
                     label={"First Name"}
                     placeholder={"Enter First Name"}
                     value={firstName}
-                    onChangeText={setFirstName}
+                    setValue={setFirstName}
                     hideInput={false}
                 />
                 <InputField
                     label={"Last Name"}
                     placeholder={"Enter Last Name"}
                     value={lastName}
-                    onChangeText={setLastName}
+                    setValue={setLastName}
                     hideInput={false}
                 />
                 <InputField
                     label={"Email"}
                     placeholder={"Enter Email"}
                     value={email}
-                    onChangeText={setEmail}
+                    setValue={setEmail}
                     hideInput={false}
                 />
                 <InputField
                     label={"Password"}
                     placeholder={"Enter Password"}
                     value={password}
-                    onChangeText={setPassword}
+                    setValue={setPassword}
                     hideInput={true}
                 />
-                {errMessage && <ErrorMessage errorMessage={errMessage} marginVertical={15} />}
+                {errMessage && <ErrorMessage errorMessage={errMessage} marginVertical={10} />}
                 <InputField
                     label={"Confirm Password"}
                     placeholder={"Re-enter Password"}
                     value={confirmPassword}
-                    onChangeText={setConfirmPassword}
+                    setValue={setConfirmPassword}
                     hideInput={true}
                 />
                 <PrimaryButton text={"Sign up"} onPress={matchPassword} />
