@@ -1,7 +1,7 @@
 import { StyleSheet, Text } from "react-native";
 import { Link } from "@react-navigation/native";
 
-const TextLink = ({ text, redirectTo, icon }) => {
+const TextLink = ({ text, redirectTo }) => {
     return (
         <Text style={styles.linkText}>
             <Link to={redirectTo}>
