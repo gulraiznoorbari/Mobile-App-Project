@@ -1,21 +1,24 @@
 import { StyleSheet, Text, View } from "react-native";
+import FontLoader from "./FontLoader";
 
 const SubHeading = ({ text }) => {
     return (
-        <View>
-            <Text style={styles.subHeading}>{text}</Text>
-        </View>
+        <FontLoader>
+            <View>
+                <Text style={styles.subHeading}>{text}</Text>
+            </View>
+        </FontLoader>
     );
 };
 
 const styles = StyleSheet.create({
     subHeading: {
         fontSize: 22,
-        fontWeight: "800",
+        fontFamily: "Poppins SemiBold",
         textAlign: "center",
         marginHorizontal: 70,
         paddingTop: 20,
-        paddingBottom: 15,
+        paddingBottom: 10,
     },
 });
 

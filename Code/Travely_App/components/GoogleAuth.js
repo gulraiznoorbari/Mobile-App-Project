@@ -1,14 +1,17 @@
 import { StyleSheet, Text, Pressable, Image } from "react-native";
+import FontLoader from "./FontLoader";
 
 const GoogleAuth = () => {
     return (
-        <Pressable
-            style={styles.googleButtonContainer}
-            onPress={() => console.log("Signed in with Google!")}
-        >
-            <Image source={require("../assets/images/Google.png")} style={styles.googleIcon} />
-            <Text style={styles.googleButtonText}>Continue with Google</Text>
-        </Pressable>
+        <FontLoader>
+            <Pressable
+                style={styles.googleButtonContainer}
+                onPress={() => console.log("Signed in with Google!")}
+            >
+                <Image source={require("../assets/images/Google.png")} style={styles.googleIcon} />
+                <Text style={styles.googleButtonText}>Continue with Google</Text>
+            </Pressable>
+        </FontLoader>
     );
 };
 
@@ -17,8 +20,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#181818",
-        padding: 10,
+        backgroundColor: "#292929",
+        padding: 8,
         marginHorizontal: 20,
         borderRadius: 50,
         marginTop: 20,
@@ -29,8 +32,8 @@ const styles = StyleSheet.create({
         marginRight: 20,
     },
     googleButtonText: {
-        fontSize: 16,
-        fontWeight: "bold",
+        fontFamily: "Poppins SemiBold",
+        fontSize: 15,
         textAlign: "center",
         color: "#fff",
     },

@@ -100,14 +100,13 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         paddingHorizontal: 20,
-        marginTop: 20,
+        marginTop: 15,
     },
 
     dividerContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginTop: 5,
     },
     divider: {
         borderBottomColor: "#000",
