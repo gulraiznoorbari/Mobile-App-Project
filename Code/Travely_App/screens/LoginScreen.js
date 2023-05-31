@@ -90,7 +90,6 @@ const LoginScreen = () => {
                 <View style={styles.divider}></View>
             </View>
             <GoogleAuth />
-            {/* <GoogleAuth setUserGoogleLogin={setUserGoogleLogin} /> */}
             <UserAgreement status="signing in" />
         </KeyboardAvoidingView>
     );

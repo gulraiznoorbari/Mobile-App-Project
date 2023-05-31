@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { Button, StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { signOut } from "firebase/auth";
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
-import auth from "@react-native-firebase/auth";
 
 import { authentication } from "../firebase/config";
 import { getUserData } from "../firebase/utils";
@@ -14,7 +12,6 @@ const HomeScreen = () => {
     const [userLastName, setUserLastName] = useState("");
     const [userEmail, setUserEmail] = useState("");
     const [errMessage, setErrMessage] = useState("");
-    // const [userGoogleLogin, setUserGoogleLogin] = useState(false);
     const navigation = useNavigation();
 
     useEffect(() => {
