@@ -2,7 +2,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StatusBar } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
@@ -10,35 +11,68 @@ import PasswordResetScreen from "./screens/PasswordResetScreen";
 import WishListScreen from "./screens/WishListScreen";
 import BookingsScreen from "./screens/BookingsScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import FontLoader from "./components/FontLoader";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
     return (
-        <Tab.Navigator
-            screenOptions={({ route }) => ({
-                tabBarIcon: ({ focused, color, size }) => {
-                    let iconName;
+        <FontLoader>
+            <Tab.Navigator
+                screenOptions={({ route }) => ({
+                    tabBarIcon: ({ focused, color, size }) => {
+                        let iconName;
 
-                    if (route.name === "Login") {
-                        iconName = focused
-                            ? "ios-information-circle"
-                            : "ios-information-circle-outline";
-                    } else if (route.name === "Menu") {
-                        iconName = "ios-list";
-                    }
-                    return <Ionicons name={iconName} size={size} color={color} />;
-                },
-                tabBarActiveTintColor: "tomato",
-                tabBarInactiveTintColor: "gray",
-            })}
-        >
-            <Tab.Screen name="Home" component={HomeScreen} />
-            <Tab.Screen name="Wishlist" component={WishListScreen} />
-            <Tab.Screen name="Bookings" component={BookingsScreen} />
-            <Tab.Screen name="Profile" component={ProfileScreen} />
-        </Tab.Navigator>
+                        if (route.name === "HomeScreen") {
+                            iconName = focused ? "home" : "home-outline";
+                        } else if (route.name === "Wishlist") {
+                            iconName = focused ? "heart" : "heart-outline";
+                        } else if (route.name === "Bookings") {
+                            iconName = focused ? "calendar-check" : "calendar-check-outline";
+                        } else if (route.name === "Profile") {
+                            iconName = focused ? "account-circle" : "account-circle-outline";
+                        }
+                        return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
+                    },
+                    headerShown: false,
+                    tabBarItemStyle: {
+                        paddingVertical: 5,
+                    },
+                    tabBarLabelStyle: {
+                        fontFamily: "Poppins SemiBold",
+                    },
+                    tabBarStyle: {
+                        height: 54,
+                        backgroundColor: "#fff",
+                    },
+                    tabBarActiveBackgroundColor: "#b5b5b5",
+                    tabBarActiveTintColor: "#000",
+                    tabBarInactiveTintColor: "#000",
+                })}
+            >
+                <Tab.Screen
+                    name="HomeScreen"
+                    component={HomeScreen}
+                    options={{ tabBarLabel: "Home" }}
+                />
+                <Tab.Screen
+                    name="Wishlist"
+                    component={WishListScreen}
+                    options={{ tabBarLabel: "Wishlist" }}
+                />
+                <Tab.Screen
+                    name="Bookings"
+                    component={BookingsScreen}
+                    options={{ tabBarLabel: "Bookings" }}
+                />
+                <Tab.Screen
+                    name="Profile"
+                    component={ProfileScreen}
+                    options={{ tabBarLabel: "Profile" }}
+                />
+            </Tab.Navigator>
+        </FontLoader>
     );
 };
 
