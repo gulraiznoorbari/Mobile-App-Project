@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 import FontLoader from "./FontLoader";
-import ButtonWithIcon from "./ButtonWithIcon";
+import ButtonWithIcon from "./Buttons/ButtonWithIcon";
 import placeholder_image from "../assets/images/placeholder_image.jpg";
 
 const CustomHomeHeader = () => {

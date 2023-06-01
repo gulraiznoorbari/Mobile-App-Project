@@ -4,7 +4,7 @@ import { sendPasswordResetEmail } from "firebase/auth";
 
 import { authentication } from "../firebase/config";
 import ErrorMessage from "../components/ErrorMessage";
-import PrimaryButton from "../components/PrimaryButton";
+import PrimaryButton from "../components/Buttons/PrimaryButton";
 import InputField from "../components/InputField";
 import TextLink from "../components/TextLink";
 

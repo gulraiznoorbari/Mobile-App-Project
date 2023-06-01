@@ -9,7 +9,7 @@ import LogoHeader from "../components/LogoHeader";
 import SubHeading from "../components/SubHeading";
 import InputField from "../components/InputField";
 import ErrorMessage from "../components/ErrorMessage";
-import PrimaryButton from "../components/PrimaryButton";
+import PrimaryButton from "../components/Buttons/PrimaryButton";
 import TextLink from "../components/TextLink";
 import UserAgreement from "../components/UserAgreement";
 

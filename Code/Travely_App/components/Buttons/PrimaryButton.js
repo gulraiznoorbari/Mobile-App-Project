@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import FontLoader from "./FontLoader";
+import FontLoader from "../FontLoader";
 
 const PrimaryButton = ({ text, action }) => {
     return (
