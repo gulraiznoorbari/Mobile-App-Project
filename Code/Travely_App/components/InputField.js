@@ -13,6 +13,7 @@ const InputField = ({ label, placeholder, value, setValue, hideInput }) => {
                     onChangeText={setValue}
                     secureTextEntry={hideInput}
                     style={styles.InputField}
+                    cursorColor={"#303030"}
                 />
             </View>
         </FontLoader>
@@ -29,10 +30,10 @@ const styles = StyleSheet.create({
         fontFamily: "Poppins",
     },
     InputField: {
-        fontSize: 14,
+        fontSize: 15,
         fontFamily: "Poppins",
         backgroundColor: "#D9D9D9",
-        height: 50,
+        height: 55,
         borderColor: "gray",
         marginTop: 20,
         padding: 15,
