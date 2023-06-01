@@ -12,6 +12,7 @@ import WishlistScreen from "./screens/WishlistScreen";
 import BookingsScreen from "./screens/BookingsScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import FontLoader from "./components/FontLoader";
+import CustomHomeHeader from "./components/CustomHomeHeader";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -54,7 +55,11 @@ const TabNavigation = () => {
                 <Tab.Screen
                     name="HomeScreen"
                     component={HomeScreen}
-                    options={{ tabBarLabel: "Home" }}
+                    options={{
+                        tabBarLabel: "Home",
+                        headerShown: true,
+                        header: () => <CustomHomeHeader />,
+                    }}
                 />
                 <Tab.Screen
                     name="Wishlist"
