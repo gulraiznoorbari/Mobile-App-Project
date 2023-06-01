@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import FontLoader from "./FontLoader";
+import ButtonWithIcon from "./ButtonWithIcon";
 import placeholder_image from "../assets/images/placeholder_image.jpg";
 
 const CustomHomeHeader = () => {
@@ -17,24 +17,20 @@ const CustomHomeHeader = () => {
                 </Pressable>
             </View>
             <View style={styles.heroButtonContainer}>
-                <Pressable style={styles.heroButton}>
-                    <MaterialCommunityIcons
-                        name="bed-outline"
-                        size={24}
-                        color="black"
-                        style={{ marginRight: 6 }}
-                    />
-                    <Text style={styles.heroButtonText}>Hotels</Text>
-                </Pressable>
-                <Pressable style={styles.heroButton}>
-                    <MaterialCommunityIcons
-                        name="ticket-confirmation-outline"
-                        size={24}
-                        color="black"
-                        style={{ marginRight: 3 }}
-                    />
-                    <Text style={styles.heroButtonText}>Things to do</Text>
-                </Pressable>
+                <ButtonWithIcon
+                    iconName={"bed-outline"}
+                    size={24}
+                    marginRight={6}
+                    text={"Hotels"}
+                    action={() => null}
+                />
+                <ButtonWithIcon
+                    iconName={"ticket-confirmation-outline"}
+                    size={24}
+                    marginRight={3}
+                    text={"Things to do"}
+                    action={() => null}
+                />
             </View>
         </FontLoader>
     );
@@ -66,19 +62,6 @@ const styles = StyleSheet.create({
         paddingBottom: 18,
         paddingHorizontal: 20,
         backgroundColor: "#003580",
-        textAlign: "center",
-    },
-    heroButton: {
-        flexDirection: "row",
-        justifyContent: "center",
-        backgroundColor: "#fff",
-        padding: 6,
-        borderRadius: 40,
-        width: 150,
-    },
-    heroButtonText: {
-        fontSize: 15,
-        fontFamily: "Poppins SemiBold",
         textAlign: "center",
     },
 });
