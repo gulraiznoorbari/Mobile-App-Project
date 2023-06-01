@@ -8,7 +8,7 @@ import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import PasswordResetScreen from "./screens/PasswordResetScreen";
-import WishListScreen from "./screens/WishListScreen";
+import WishlistScreen from "./screens/WishlistScreen";
 import BookingsScreen from "./screens/BookingsScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import FontLoader from "./components/FontLoader";
@@ -58,7 +58,7 @@ const TabNavigation = () => {
                 />
                 <Tab.Screen
                     name="Wishlist"
-                    component={WishListScreen}
+                    component={WishlistScreen}
                     options={{ tabBarLabel: "Wishlist" }}
                 />
                 <Tab.Screen

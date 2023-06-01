@@ -1,34 +1,18 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, Text, View } from "react-native";
 import { sendPasswordResetEmail } from "firebase/auth";
 
 import { authentication } from "../firebase/config";
-import { getUserData } from "../firebase/utils";
 import ErrorMessage from "../components/ErrorMessage";
 import PrimaryButton from "../components/PrimaryButton";
 import InputField from "../components/InputField";
 import TextLink from "../components/TextLink";
 
 const PasswordResetScreen = ({ navigation }) => {
-    const [email, setEmail] = useState("");
+    const [email, setEmail] = useState(
+        authentication.currentUser ? authentication.currentUser.email : "",
+    );
     const [errMessage, setErrMessage] = useState("");
-
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const userData = await getUserData(authentication.currentUser.uid);
-                if (userData) {
-                    setEmail(userData.Email);
-                }
-            } catch (error) {
-                console.log(error.message);
-                setErrMessage(error.message);
-            }
-        };
-        if (authentication.currentUser) {
-            fetchUserData();
-        }
-    }, []);
 
     const handleResetPassword = () => {
         sendPasswordResetEmail(authentication, email)
@@ -72,8 +56,6 @@ const PasswordResetScreen = ({ navigation }) => {
     );
 };
 
-export default PasswordResetScreen;
-
 const styles = StyleSheet.create({
     infoText: {
         marginHorizontal: 20,
@@ -91,3 +73,5 @@ const styles = StyleSheet.create({
         color: "#2e2e2d",
     },
 });
+
+export default PasswordResetScreen;

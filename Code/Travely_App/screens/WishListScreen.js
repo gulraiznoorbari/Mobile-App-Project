@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 
-const WishListScreen = () => {
+const WishlistScreen = () => {
     return (
         <View>
             <Text>WishlistScreen</Text>
@@ -8,6 +8,6 @@ const WishListScreen = () => {
     );
 };
 
-export default WishListScreen;
+export default WishlistScreen;
 
 const styles = StyleSheet.create({});
