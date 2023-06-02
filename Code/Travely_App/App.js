@@ -50,6 +50,21 @@ const TabNavigation = () => {
                     tabBarActiveBackgroundColor: "#b5b5b5",
                     tabBarActiveTintColor: "#000",
                     tabBarInactiveTintColor: "#000",
+                    tabBarHideOnKeyboard: true,
+                    tabBarVisibilityAnimationConfig: {
+                        show: {
+                            animation: "timing",
+                            config: {
+                                duration: 300,
+                            },
+                        },
+                        hide: {
+                            animation: "spring",
+                            config: {
+                                duration: 100,
+                            },
+                        },
+                    },
                 })}
             >
                 <Tab.Screen
