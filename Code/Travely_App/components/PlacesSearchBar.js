@@ -1,12 +1,13 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { GOOGLE_PLACES_API_KEY } from "@env";
+import { FontAwesome } from "@expo/vector-icons";
 
 const PlacesSearchBar = () => {
     return (
         <View style={styles.placesSearchContainer}>
             <GooglePlacesAutocomplete
-                placeholder="Search"
+                placeholder="Where are you going?"
                 fetchDetails={true}
                 onPress={(data, details = null) => {
                     // 'details' is provided when fetchDetails = true
@@ -19,16 +20,16 @@ const PlacesSearchBar = () => {
                 styles={{
                     textInputContainer: {
                         marginHorizontal: 20,
+                        borderWidth: 2,
+                        borderRadius: 10,
+                        paddingHorizontal: 5,
+                        height: 48,
+                        marginTop: 20,
                     },
                     textInput: {
                         backgroundColor: "#fff",
-                        borderRadius: 10,
-                        height: 45,
                         width: "70%",
-                        borderColor: "#000",
-                        borderWidth: 2,
-                        marginTop: 20,
-                        paddingLeft: 20,
+                        paddingLeft: 15,
                         fontSize: 15,
                         color: "#000",
                         fontFamily: "Poppins",
@@ -43,6 +44,14 @@ const PlacesSearchBar = () => {
                         overflow: "scroll",
                     },
                 }}
+                renderLeftButton={() => (
+                    <FontAwesome
+                        name="search"
+                        size={19}
+                        color={"#000"}
+                        style={{ marginTop: 11, marginLeft: 10 }}
+                    />
+                )}
             />
         </View>
     );
