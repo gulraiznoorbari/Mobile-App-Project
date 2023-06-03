@@ -104,7 +104,7 @@ const HomeScreen = () => {
                                                     title={data?.name}
                                                     rating={data?.rating}
                                                     price={data?.offer_group?.lowest_price}
-                                                    location={data?.address_obj?.country}
+                                                    location={data?.location_string}
                                                     data={data}
                                                 />
                                             ))}
