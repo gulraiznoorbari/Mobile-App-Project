@@ -1,8 +1,6 @@
 import { StyleSheet, Text, Pressable, View, Image } from "react-native";
 import StarRating from "react-native-star-rating-widget";
-import { PlaceHolder } from "../../assets/images";
 import { useNavigation } from "@react-navigation/native";
-import FontLoader from "../FontLoader";
 
 const AttractionsCard = ({ imageSrc, title, rating, price, location, data }) => {
     const navigation = useNavigation();
