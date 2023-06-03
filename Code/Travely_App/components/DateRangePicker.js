@@ -45,6 +45,17 @@ const DateRangePicker = () => {
         <FontLoader>
             <TouchableOpacity onPress={showDatePicker}>
                 <View>
+                    <MaterialCommunityIcons
+                        name="calendar-range"
+                        size={24}
+                        color="#000"
+                        style={{
+                            position: "absolute",
+                            top: 30,
+                            left: 35,
+                            zIndex: 1,
+                        }}
+                    />
                     <TextInput
                         value={renderDateInfo()}
                         editable={false}
@@ -52,13 +63,14 @@ const DateRangePicker = () => {
                         style={{
                             backgroundColor: "#fff",
                             padding: 10,
+                            paddingLeft: 50,
                             marginHorizontal: 20,
                             marginTop: 15,
                             borderRadius: 10,
                             borderWidth: 2,
                             borderColor: "#000",
                             fontFamily: "Poppins",
-                            fontSize: 16,
+                            fontSize: 15,
                         }}
                     />
                 </View>
