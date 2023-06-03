@@ -4,6 +4,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import CalendarPicker from "react-native-calendar-picker";
 import moment from "moment";
 import Modal from "react-native-modal";
+import FontLoader from "./FontLoader";
 
 const DateRangePicker = () => {
     const [selectedStartDate, setSelectedStartDate] = useState(null);
@@ -31,32 +32,34 @@ const DateRangePicker = () => {
         if (selectedStartDate && selectedEndDate) {
             const formattedStartDate = moment(selectedStartDate).format("DD/MM/YYYY");
             const formattedEndDate = moment(selectedEndDate).format("DD/MM/YYYY");
-            return (
-                <Text>
-                    Selected Dates: {formattedStartDate} - {formattedEndDate}
-                </Text>
-            );
+            return `${formattedStartDate} - ${formattedEndDate}`;
         } else if (selectedStartDate) {
             const formattedStartDate = moment(selectedStartDate).format("DD/MM/YYYY");
-            return <Text>Selected Date: {formattedStartDate}</Text>;
+            return `${formattedStartDate}`;
         } else {
-            return <Text>Please select a date.</Text>;
+            return "";
         }
     };
 
     return (
-        <View>
+        <FontLoader>
             <TouchableOpacity onPress={showDatePicker}>
                 <View>
-                    <Text>Select Date</Text>
-                    <Text>
-                        {selectedStartDate ? moment(selectedStartDate).format("DD/MM/YYYY") : ""}
-                    </Text>
                     <TextInput
-                        value={
-                            selectedStartDate ? moment(selectedStartDate).format("DD/MM/YYYY") : ""
-                        }
+                        value={renderDateInfo()}
                         editable={false}
+                        placeholder="Select dates"
+                        style={{
+                            backgroundColor: "#fff",
+                            padding: 10,
+                            marginHorizontal: 20,
+                            marginTop: 15,
+                            borderRadius: 10,
+                            borderWidth: 2,
+                            borderColor: "#000",
+                            fontFamily: "Poppins",
+                            fontSize: 16,
+                        }}
                     />
                 </View>
             </TouchableOpacity>
@@ -65,6 +68,7 @@ const DateRangePicker = () => {
                 isVisible={isDatePickerVisible}
                 style={{
                     backgroundColor: "white",
+                    marginVertical: 190,
                     borderRadius: 10,
                 }}
             >
@@ -73,13 +77,13 @@ const DateRangePicker = () => {
                         onPress={() => hideDatePicker()}
                         style={{
                             position: "absolute",
-                            top: -35,
-                            right: 5,
+                            top: -40,
+                            right: 0,
                             padding: 10,
                             alignItems: "center",
                         }}
                     >
-                        <MaterialCommunityIcons name="close" size={24} color="#003580" />
+                        <MaterialCommunityIcons name="close" size={26} color="#003580" />
                     </TouchableOpacity>
 
                     <CalendarPicker
@@ -89,14 +93,14 @@ const DateRangePicker = () => {
                         selectedDayColor="#003580"
                         selectedDayTextColor="#FFFFFF"
                         onDateChange={onDateChange}
-                        width={320}
-                        height={320}
+                        width={325}
+                        height={325}
                     />
                 </View>
             </Modal>
 
-            {renderDateInfo()}
-        </View>
+            {/* {renderDateInfo()} */}
+        </FontLoader>
     );
 };
 
