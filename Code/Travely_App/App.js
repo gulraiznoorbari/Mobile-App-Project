@@ -15,7 +15,7 @@ import WishlistScreen from "./screens/WishlistScreen";
 import BookingsScreen from "./screens/BookingsScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import DestinationDetailScreen from "./screens/DestinationDetailScreen";
-import DetailScreen from "./screens/DetailScreen";
+import AttractionScreen from "./screens/AttractionScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -124,7 +124,25 @@ const App = () => {
                     }}
                 />
                 <Stack.Screen name="DestinationDetail" component={DestinationDetailScreen} />
-                <Stack.Screen name="Detail" component={DetailScreen} />
+                <Stack.Screen
+                    name="AttractionsDetails"
+                    component={AttractionScreen}
+                    options={{
+                        headerShown: true,
+                        headerTitle: "Attractions",
+                        headerStyle: {
+                            backgroundColor: "#003580",
+                            height: 75,
+                        },
+                        headerTintColor: "#fff",
+                        headerTitleStyle: {
+                            fontWeight: "bold",
+                            fontFamily: "Poppins-Bold",
+                            fontSize: 24,
+                        },
+                        headerBackTitleVisible: false,
+                    }}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     );
