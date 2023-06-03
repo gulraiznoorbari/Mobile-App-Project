@@ -4,16 +4,21 @@ import { GOOGLE_PLACES_API_KEY } from "@env";
 import { FontAwesome } from "@expo/vector-icons";
 import FontLoader from "./FontLoader";
 
-const PlacesSearchBar = () => {
+const PlacesSearchBar = ({ setBl_lat, setBl_lng, setTr_lat, setTr_lng }) => {
     return (
         <FontLoader>
             <View style={styles.placesSearchContainer}>
                 <GooglePlacesAutocomplete
                     placeholder="Where are you going?"
                     fetchDetails={true}
-                    onPress={(data, details = null) => {
+                    onPress={(data, details) => {
                         // 'details' is provided when fetchDetails = true
                         console.log(data, details);
+                        console.log(details?.geometry?.viewport);
+                        setBl_lat(details?.geometry?.viewport?.southwest?.lat);
+                        setBl_lng(details?.geometry?.viewport?.southwest?.lng);
+                        setTr_lat(details?.geometry?.viewport?.northeast?.lat);
+                        setTr_lng(details?.geometry?.viewport?.northeast?.lng);
                     }}
                     query={{
                         key: GOOGLE_PLACES_API_KEY,
@@ -43,6 +48,7 @@ const PlacesSearchBar = () => {
                             elevation: 5,
                             maxHeight: 150,
                             overflow: "scroll",
+                            zIndex: 1000,
                         },
                     }}
                     renderLeftButton={() => (

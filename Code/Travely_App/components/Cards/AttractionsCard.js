@@ -1,17 +1,23 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
+import { StyleSheet, Text, Pressable, View, Image } from "react-native";
 import StarRating from "react-native-star-rating-widget";
 import { PlaceHolder } from "../../assets/images";
+import { useNavigation } from "@react-navigation/native";
 
-const AttractionsCard = () => {
+const AttractionsCard = ({ imageSrc, title, rating, price, location, data }) => {
+    const navigation = useNavigation();
+
     return (
-        <TouchableOpacity style={styles.container}>
-            <Image source={PlaceHolder} style={styles.image} resizeMode="cover" />
+        <Pressable
+            style={styles.container}
+            onPress={() => navigation.navigate("Detail", { param: data })}
+        >
+            <Image source={{ uri: imageSrc }} style={styles.image} resizeMode="cover" />
             <View style={styles.textContainer}>
-                <Text style={styles.text}>Hello</Text>
+                <Text style={styles.text}>{title}</Text>
             </View>
             <View style={styles.starRatingsContainer}>
                 <StarRating
-                    rating={4.5}
+                    rating={rating}
                     color="gold"
                     starSize={20}
                     starStyle={{
@@ -21,10 +27,12 @@ const AttractionsCard = () => {
                         width: "10%",
                         height: 20,
                     }}
+                    onChange={(rating) => console.log(rating)}
                 />
             </View>
-            <Text style={styles.price}>from $100 per adult</Text>
-        </TouchableOpacity>
+            <Text style={styles.price}>from {price} per adult</Text>
+            <Text style={styles.location}>{location}</Text>
+        </Pressable>
     );
 };
 
@@ -38,7 +46,7 @@ const styles = StyleSheet.create({
     },
     image: {
         width: "100%",
-        height: 150,
+        height: 125,
         borderRadius: 10,
     },
     textContainer: {
