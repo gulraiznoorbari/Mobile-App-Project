@@ -2,11 +2,12 @@ import { StyleSheet, Text, Pressable, View, Image } from "react-native";
 import StarRating from "react-native-star-rating-widget";
 import { PlaceHolder } from "../../assets/images";
 import { useNavigation } from "@react-navigation/native";
+import FontLoader from "../FontLoader";
 
 const AttractionsCard = ({ imageSrc, title, rating, price, location, data }) => {
     const navigation = useNavigation();
 
-    return (
+    return title ? (
         <Pressable
             style={styles.container}
             onPress={() => navigation.navigate("Detail", { param: data })}
@@ -33,6 +34,8 @@ const AttractionsCard = ({ imageSrc, title, rating, price, location, data }) => 
             <Text style={styles.price}>from {price} per adult</Text>
             <Text style={styles.location}>{location}</Text>
         </Pressable>
+    ) : (
+        <></>
     );
 };
 
@@ -62,6 +65,10 @@ const styles = StyleSheet.create({
     },
     price: {
         fontFamily: "Poppins SemiBold",
+        fontSize: 12,
+    },
+    location: {
+        fontFamily: "Poppins",
         fontSize: 12,
     },
 });
