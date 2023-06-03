@@ -51,7 +51,7 @@ const DateRangePicker = () => {
                         color="#000"
                         style={{
                             position: "absolute",
-                            top: 30,
+                            top: 20,
                             left: 35,
                             zIndex: 1,
                         }}
@@ -62,10 +62,10 @@ const DateRangePicker = () => {
                         placeholder="Select dates"
                         style={{
                             backgroundColor: "#fff",
-                            padding: 10,
+                            padding: 7,
                             paddingLeft: 50,
                             marginHorizontal: 20,
-                            marginTop: 15,
+                            marginTop: 10,
                             borderRadius: 10,
                             borderWidth: 2,
                             borderColor: "#000",
