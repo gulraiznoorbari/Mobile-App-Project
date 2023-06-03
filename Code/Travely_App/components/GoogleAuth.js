@@ -1,5 +1,6 @@
 import { StyleSheet, Text, Pressable, Image } from "react-native";
 import FontLoader from "./FontLoader";
+import { Google } from "../assets/images";
 
 const GoogleAuth = () => {
     return (
@@ -8,7 +9,7 @@ const GoogleAuth = () => {
                 style={styles.googleButtonContainer}
                 onPress={() => console.log("Signed in with Google!")}
             >
-                <Image source={require("../assets/images/Google.png")} style={styles.googleIcon} />
+                <Image source={Google} style={styles.googleIcon} />
                 <Text style={styles.googleButtonText}>Continue with Google</Text>
             </Pressable>
         </FontLoader>

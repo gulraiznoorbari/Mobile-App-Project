@@ -7,6 +7,8 @@ import DateRangePicker from "../components/DateRangePicker";
 import SquaredButton from "../components/Buttons/SquaredButton";
 import HeadingText from "../components/HeadingText";
 import DestinationCard from "../components/Cards/DestinationCard";
+import AttractionsCard from "../components/Cards/AttractionsCard";
+import { Dubai, London, NewYorkCity, Singapore } from "../assets/images";
 
 const HomeScreen = () => {
     return (
@@ -23,29 +25,36 @@ const HomeScreen = () => {
                         <SquaredButton text="Search" marginTop={7} padding={8} />
                     </View>
 
-                    {/* Destinations Section */}
+                    {/* Popular Destinations Section */}
                     <View>
                         <HeadingText text="Popular Destinations" />
                         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                            <DestinationCard
-                                text={"Dubai"}
-                                image={require("../assets/images/dubai.jpg")}
-                            />
-                            <DestinationCard
-                                text={"London"}
-                                image={require("../assets/images/london.jpg")}
-                            />
+                            <DestinationCard text={"Dubai"} image={Dubai} />
+                            <DestinationCard text={"London"} image={London} />
                         </View>
                         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                            <DestinationCard
-                                text={"New York City"}
-                                image={require("../assets/images/new_york_city.jpg")}
-                            />
-                            <DestinationCard
-                                text={"Singapore"}
-                                image={require("../assets/images/singapore.jpg")}
-                            />
+                            <DestinationCard text={"New York City"} image={NewYorkCity} />
+                            <DestinationCard text={"Singapore"} image={Singapore} />
                         </View>
+                    </View>
+
+                    {/* Top Attractions */}
+                    <View>
+                        <HeadingText text="Top Attractions" />
+                        <ScrollView
+                            horizontal
+                            contentContainerStyle={{
+                                flexGrow: 1,
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                marginBottom: 20,
+                            }}
+                        >
+                            <AttractionsCard />
+                            <AttractionsCard />
+                            <AttractionsCard />
+                            <AttractionsCard />
+                        </ScrollView>
                     </View>
                 </ScrollView>
             ) : (
