@@ -7,10 +7,10 @@ export const getPlacesData = async (bl_lat, bl_lng, tr_lat, tr_lng, type) => {
             data: { data },
         } = await axios.get(`https://travel-advisor.p.rapidapi.com/${type}/list-in-boundary`, {
             params: {
-                bl_latitude: bl_lat ? bl_lat : "25.15543993776612",
-                tr_latitude: tr_lat ? tr_lat : "25.41257834546226",
-                bl_longitude: bl_lng ? bl_lng : "51.39587210719369",
-                tr_longitude: tr_lng ? tr_lng : "51.62812119686502",
+                bl_latitude: bl_lat ? bl_lat : "51.38494012429096",
+                tr_latitude: tr_lat ? tr_lat : "51.67234324898703",
+                bl_longitude: bl_lng ? bl_lng : "-0.3514683384218145",
+                tr_longitude: tr_lng ? tr_lng : "0.1482710335611201",
                 limit: "30",
                 currency: "USD",
                 lunit: "km",
