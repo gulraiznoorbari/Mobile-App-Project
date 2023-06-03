@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, TextInput, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import CalendarPicker from "react-native-calendar-picker";
 import moment from "moment";
@@ -86,7 +86,11 @@ const DateRangePicker = () => {
             >
                 <View>
                     <TouchableOpacity
-                        onPress={() => hideDatePicker()}
+                        onPress={() => {
+                            hideDatePicker();
+                            // setSelectedStartDate(null);
+                            // setSelectedEndDate(null);
+                        }}
                         style={{
                             position: "absolute",
                             top: -40,
@@ -110,8 +114,6 @@ const DateRangePicker = () => {
                     />
                 </View>
             </Modal>
-
-            {/* {renderDateInfo()} */}
         </FontLoader>
     );
 };
