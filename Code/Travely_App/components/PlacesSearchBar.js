@@ -21,7 +21,6 @@ const PlacesSearchBar = () => {
                     }}
                     styles={{
                         textInputContainer: {
-                            marginHorizontal: 20,
                             borderWidth: 2,
                             borderRadius: 10,
                             paddingHorizontal: 5,

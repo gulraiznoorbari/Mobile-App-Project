@@ -9,7 +9,6 @@ const SquaredButton = ({ text, action, marginTop, padding }) => {
                     backgroundColor: "#003580",
                     padding: padding,
                     marginTop: marginTop,
-                    marginHorizontal: 20,
                     borderRadius: 10,
                     borderWidth: 1,
                     borderColor: "#000",
