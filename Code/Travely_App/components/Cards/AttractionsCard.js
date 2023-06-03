@@ -10,9 +10,20 @@ const AttractionsCard = () => {
                 <Text style={styles.text}>Hello</Text>
             </View>
             <View style={styles.starRatingsContainer}>
-                <StarRating rating={4.5} color="gold" />
+                <StarRating
+                    rating={4.5}
+                    color="gold"
+                    starSize={20}
+                    starStyle={{
+                        padding: 0,
+                        marginLeft: 0,
+                        marginTop: -5,
+                        width: "10%",
+                        height: 20,
+                    }}
+                />
             </View>
-            <Text style={styles.price}>$100</Text>
+            <Text style={styles.price}>from $100 per adult</Text>
         </TouchableOpacity>
     );
 };
@@ -23,7 +34,7 @@ const styles = StyleSheet.create({
         height: 250,
         backgroundColor: "#fff",
         borderRadius: 10,
-        marginRight: 10,
+        marginRight: 12,
     },
     image: {
         width: "100%",
@@ -39,16 +50,10 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
     starRatingsContainer: {
-        width: 50,
-        height: 20,
-        borderRadius: 10,
-    },
-    starRatings: {
-        fontFamily: "Poppins",
-        fontSize: 12,
+        marginHorizontal: 0,
     },
     price: {
-        fontFamily: "Poppins",
+        fontFamily: "Poppins SemiBold",
         fontSize: 12,
     },
 });
