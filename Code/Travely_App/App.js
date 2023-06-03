@@ -4,6 +4,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StatusBar } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
+import FontLoader from "./components/FontLoader";
+import CustomHomeHeader from "./components/CustomHomeHeader";
+
 import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
@@ -11,8 +14,8 @@ import PasswordResetScreen from "./screens/PasswordResetScreen";
 import WishlistScreen from "./screens/WishlistScreen";
 import BookingsScreen from "./screens/BookingsScreen";
 import ProfileScreen from "./screens/ProfileScreen";
-import FontLoader from "./components/FontLoader";
-import CustomHomeHeader from "./components/CustomHomeHeader";
+import DestinationDetailScreen from "./screens/DestinationDetailScreen";
+import DetailScreen from "./screens/DetailScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -120,6 +123,8 @@ const App = () => {
                         headerBackTitleVisible: false,
                     }}
                 />
+                <Stack.Screen name="DestinationDetail" component={DestinationDetailScreen} />
+                <Stack.Screen name="Detail" component={DetailScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     );
