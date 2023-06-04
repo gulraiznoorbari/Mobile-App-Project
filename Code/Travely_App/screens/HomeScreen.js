@@ -42,7 +42,8 @@ const HomeScreen = () => {
             }
             title={item?.name}
             rating={item?.rating}
-            price={item?.offer_group?.lowest_price}
+            price={item?.offer_group?.offer_list[0]?.price}
+            openStatus={item?.open_now_text}
             location={item?.location_string}
             data={item}
         />
@@ -187,7 +188,6 @@ const HomeScreen = () => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#fff",
         paddingHorizontal: 20,
     },
 });
