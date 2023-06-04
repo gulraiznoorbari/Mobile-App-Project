@@ -37,7 +37,7 @@ const AttractionsCard = ({ imageSrc, title, rating, price, location, openStatus,
                 />
             </View>
             <Text style={styles.price}>from {price} per adult</Text>
-            <Text style={styles.status}>{openStatus}</Text>
+            {openStatus ? <Text style={styles.status}>{openStatus}</Text> : <></>}
             <Text style={styles.location}>
                 {" "}
                 {location?.length > 18 ? `${title.slice(0, 18)}..` : location}
