@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, View, Text, FlatList, ActivityIndicator, ScrollView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 import { authentication } from "../firebase/config";
 import { getPlacesData } from "../api/travelAdvisorAPI";
@@ -13,6 +14,7 @@ import DestinationCard from "../components/Cards/DestinationCard";
 import AttractionsCard from "../components/Cards/AttractionsCard";
 
 const HomeScreen = () => {
+    const navigation = useNavigation();
     const [isLoading, setIsLoading] = useState(false);
     const [mainData, setMainData] = useState([]);
     const [bl_lat, setBl_lat] = useState(null);
@@ -46,6 +48,48 @@ const HomeScreen = () => {
         />
     );
 
+    const handleCityPress = (city) => {
+        switch (city) {
+            case "Dubai":
+                setBl_lat(25.0657);
+                setBl_lng(55.17128);
+                setTr_lat(25.276987);
+                setTr_lng(55.296249);
+                break;
+            case "London":
+                setBl_lat(51.5074);
+                setBl_lng(-0.1278);
+                setTr_lat(51.5207);
+                setTr_lng(-0.0978);
+                break;
+            case "New York City":
+                setBl_lat(40.7128);
+                setBl_lng(-74.006);
+                setTr_lat(40.7218);
+                setTr_lng(-73.9973);
+                break;
+            case "Singapore":
+                setBl_lat(1.29027);
+                setBl_lng(103.851959);
+                setTr_lat(1.3047);
+                setTr_lng(103.852);
+                break;
+            default:
+                break;
+        }
+        setIsLoading(true);
+        getPlacesData(bl_lat, bl_lng, tr_lat, tr_lng, "attractions")
+            .then((data) => {
+                setMainData(data);
+                setIsLoading(false);
+            })
+            .catch((error) => {
+                console.log("Error: ", error);
+                setIsLoading(false);
+            });
+        navigation.navigate("DestinationDetail", { param: mainData });
+    };
+
     return (
         <>
             {!authentication.currentUser ? (
@@ -74,8 +118,16 @@ const HomeScreen = () => {
                                         justifyContent: "space-between",
                                     }}
                                 >
-                                    <DestinationCard text={"Dubai"} image={Dubai} />
-                                    <DestinationCard text={"London"} image={London} />
+                                    <DestinationCard
+                                        text={"Dubai"}
+                                        image={Dubai}
+                                        action={() => handleCityPress("Dubai")}
+                                    />
+                                    <DestinationCard
+                                        text={"London"}
+                                        image={London}
+                                        action={() => handleCityPress("London")}
+                                    />
                                 </View>
                                 <View
                                     style={{
@@ -83,8 +135,16 @@ const HomeScreen = () => {
                                         justifyContent: "space-between",
                                     }}
                                 >
-                                    <DestinationCard text={"New York City"} image={NewYorkCity} />
-                                    <DestinationCard text={"Singapore"} image={Singapore} />
+                                    <DestinationCard
+                                        text={"New York City"}
+                                        image={NewYorkCity}
+                                        action={() => handleCityPress("New York City")}
+                                    />
+                                    <DestinationCard
+                                        text={"Singapore"}
+                                        image={Singapore}
+                                        action={() => handleCityPress("Singapore")}
+                                    />
                                 </View>
                             </View>
                             {/* Top Attractions */}

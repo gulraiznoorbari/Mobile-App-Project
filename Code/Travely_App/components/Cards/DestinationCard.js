@@ -1,5 +1,4 @@
 import { StyleSheet, Text, View, ImageBackground, TouchableOpacity } from "react-native";
-import React from "react";
 
 const DestinationCard = ({ text, image, action }) => {
     return (
