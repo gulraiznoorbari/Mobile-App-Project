@@ -8,7 +8,7 @@ const AttractionsCard = ({ imageSrc, title, rating, price, location, data }) => 
     return title ? (
         <Pressable
             style={styles.container}
-            onPress={() => navigation.navigate("AttractionsDetails", { param: data })}
+            onPress={() => navigation.navigate("CreateBooking", { param: data })}
         >
             <Image source={{ uri: imageSrc }} style={styles.image} resizeMode="cover" />
             <View style={styles.textContainer}>
