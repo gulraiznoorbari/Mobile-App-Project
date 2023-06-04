@@ -15,7 +15,7 @@ import WishlistScreen from "./screens/WishlistScreen";
 import BookingsScreen from "./screens/BookingsScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import DestinationDetailScreen from "./screens/DestinationDetailScreen";
-import AttractionScreen from "./screens/AttractionScreen";
+import CreateBookingScreen from "./screens/CreateBookingScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -125,8 +125,8 @@ const App = () => {
                 />
                 <Stack.Screen name="DestinationDetail" component={DestinationDetailScreen} />
                 <Stack.Screen
-                    name="AttractionsDetails"
-                    component={AttractionScreen}
+                    name="CreateBooking"
+                    component={CreateBookingScreen}
                     options={{
                         headerShown: true,
                         headerTitle: "Attractions",
