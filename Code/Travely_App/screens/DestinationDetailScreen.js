@@ -58,6 +58,22 @@ const DestinationDetailScreen = ({ route }) => {
         />
     );
 
+    const renderFoodCard = ({ item }) => (
+        <AttractionsCard
+            imageSrc={
+                item?.photo?.images?.medium?.url
+                    ? item?.photo?.images?.medium?.url
+                    : "https://cdn.pixabay.com/photo/2015/10/30/12/22/eat-1014025_1280.jpg"
+            }
+            title={item?.name}
+            rating={item?.rating}
+            price={item?.offer_group?.offer_list[0]?.price}
+            openStatus={item?.open_now_text}
+            location={item?.location_string}
+            data={item}
+        />
+    );
+
     return (
         <ScrollView>
             <Image source={PlaceHolder} style={styles.image} resizeMode="cover" />
@@ -123,7 +139,7 @@ const DestinationDetailScreen = ({ route }) => {
                         }}
                         data={data}
                         keyExtractor={(item, index) => index.toString()}
-                        renderItem={renderHotelsCard}
+                        renderItem={renderFoodCard}
                     />
                 </View>
             </View>
