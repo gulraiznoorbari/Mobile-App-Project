@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, View, Text, ScrollView, ActivityIndicator } from "react-native";
+import { StyleSheet, View, Text, FlatList, ActivityIndicator, ScrollView } from "react-native";
 
 import { authentication } from "../firebase/config";
 import { getPlacesData } from "../api/travelAdvisorAPI";
@@ -31,6 +31,21 @@ const HomeScreen = () => {
         });
     }, [bl_lat, bl_lng, tr_lat, tr_lng]);
 
+    const renderAttractionsCard = ({ item }) => (
+        <AttractionsCard
+            imageSrc={
+                item?.photo?.images?.medium?.url
+                    ? item?.photo?.images?.medium?.url
+                    : "https://cdn.pixabay.com/photo/2015/10/30/12/22/eat-1014025_1280.jpg"
+            }
+            title={item?.name}
+            rating={item?.rating}
+            price={item?.offer_group?.lowest_price}
+            location={item?.location_string}
+            data={item}
+        />
+    );
+
     return (
         <>
             {!authentication.currentUser ? (
@@ -39,13 +54,9 @@ const HomeScreen = () => {
                         <ActivityIndicator size="large" color="#003580" />
                     </View>
                 ) : (
-                    <View>
+                    <ScrollView>
                         {/* Search Section */}
-                        <ScrollView
-                            contentContainerStyle={styles.container}
-                            showsVerticalScrollIndicator={false}
-                        >
-                            {/* <View style={styles.container}> */}
+                        <View style={styles.container}>
                             <PlacesSearchBar
                                 setBl_lat={bl_lat ? bl_lat : setBl_lat}
                                 setBl_lng={bl_lng ? bl_lng : setBl_lng}
@@ -54,8 +65,6 @@ const HomeScreen = () => {
                             />
                             <DateRangePicker />
                             <SquaredButton text="Search" marginTop={7} padding={8} />
-                            {/* </View> */}
-
                             {/* Popular Destinations Section */}
                             <View>
                                 <HeadingText text="Popular Destinations" />
@@ -78,54 +87,36 @@ const HomeScreen = () => {
                                     <DestinationCard text={"Singapore"} image={Singapore} />
                                 </View>
                             </View>
-
                             {/* Top Attractions */}
                             <View>
                                 <HeadingText text="Top Attractions" />
-                                <ScrollView
-                                    horizontal
-                                    contentContainerStyle={{
-                                        flexGrow: 1,
-                                        flexDirection: "row",
-                                        justifyContent: "space-between",
-                                        marginBottom: 20,
-                                    }}
-                                >
-                                    {mainData?.length > 0 ? (
-                                        <>
-                                            {mainData?.map((data, i) => (
-                                                <AttractionsCard
-                                                    key={i}
-                                                    imageSrc={
-                                                        data?.photo?.images?.medium?.url
-                                                            ? data?.photo?.images?.medium?.url
-                                                            : "https://cdn.pixabay.com/photo/2015/10/30/12/22/eat-1014025_1280.jpg"
-                                                    }
-                                                    title={data?.name}
-                                                    rating={data?.rating}
-                                                    price={data?.offer_group?.lowest_price}
-                                                    location={data?.location_string}
-                                                    data={data}
-                                                />
-                                            ))}
-                                        </>
-                                    ) : (
-                                        <>
-                                            <View
-                                                style={{
-                                                    flex: 1,
-                                                    justifyContent: "center",
-                                                    alignItems: "center",
-                                                }}
-                                            >
-                                                <Text>Opps...No Data Found</Text>
-                                            </View>
-                                        </>
-                                    )}
-                                </ScrollView>
+                                {mainData.length > 0 ? (
+                                    <FlatList
+                                        horizontal
+                                        contentContainerStyle={{
+                                            flexGrow: 1,
+                                            flexDirection: "row",
+                                            justifyContent: "space-between",
+                                            marginBottom: 20,
+                                        }}
+                                        data={mainData}
+                                        keyExtractor={(item, index) => index.toString()}
+                                        renderItem={renderAttractionsCard}
+                                    />
+                                ) : (
+                                    <View
+                                        style={{
+                                            flex: 1,
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                        }}
+                                    >
+                                        <Text>Oops...No Data Found</Text>
+                                    </View>
+                                )}
                             </View>
-                        </ScrollView>
-                    </View>
+                        </View>
+                    </ScrollView>
                 )
             ) : (
                 <LoginScreen />
