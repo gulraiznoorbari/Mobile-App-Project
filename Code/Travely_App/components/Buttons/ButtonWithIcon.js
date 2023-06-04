@@ -1,34 +1,46 @@
 import { StyleSheet, Text, Pressable } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const ButtonWithIcon = ({ iconName, size, marginRight, text, action }) => {
+const ButtonWithIcon = ({
+    iconName,
+    size,
+    marginRight,
+    bgColor,
+    text,
+    textColor,
+    iconColor,
+    action,
+}) => {
     return (
-        <Pressable style={styles.heroButton} onPress={action}>
+        <Pressable
+            style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                backgroundColor: bgColor ? bgColor : "#fff",
+                padding: 6,
+                borderRadius: 40,
+                width: 150,
+            }}
+            onPress={action}
+        >
             <MaterialCommunityIcons
                 name={iconName}
                 size={size}
-                color="black"
+                color={iconColor ? iconColor : "#000"}
                 style={{ marginRight: marginRight }}
             />
-            <Text style={styles.heroButtonText}>{text}</Text>
+            <Text
+                style={{
+                    fontSize: 15,
+                    fontFamily: "Poppins SemiBold",
+                    color: textColor ? textColor : "#000",
+                    textAlign: "center",
+                }}
+            >
+                {text}
+            </Text>
         </Pressable>
     );
 };
-
-const styles = StyleSheet.create({
-    heroButton: {
-        flexDirection: "row",
-        justifyContent: "center",
-        backgroundColor: "#fff",
-        padding: 6,
-        borderRadius: 40,
-        width: 150,
-    },
-    heroButtonText: {
-        fontSize: 15,
-        fontFamily: "Poppins SemiBold",
-        textAlign: "center",
-    },
-});
 
 export default ButtonWithIcon;
