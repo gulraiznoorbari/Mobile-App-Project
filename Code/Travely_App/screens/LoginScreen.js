@@ -79,7 +79,7 @@ const LoginScreen = () => {
                 hideInput={true}
             />
             {errMessage && <ErrorMessage errorMessage={errMessage} marginVertical={10} />}
-            <PrimaryButton text="Sign In" action={handleLogin} />
+            <PrimaryButton text="Sign In" action={handleLogin} marginHorizontal={20} />
             <View style={styles.extraOptions}>
                 <TextLink text="Create Account" redirectTo="/SignUp" />
                 <TextLink text="Forgot Password?" redirectTo="/PasswordReset" />

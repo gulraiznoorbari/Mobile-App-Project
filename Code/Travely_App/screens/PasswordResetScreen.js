@@ -46,7 +46,11 @@ const PasswordResetScreen = ({ navigation }) => {
                 hideInput={false}
             />
             {errMessage && <ErrorMessage message={errMessage} marginVertical={10} />}
-            <PrimaryButton text={"Reset Password"} action={handleResetPassword} />
+            <PrimaryButton
+                text={"Reset Password"}
+                action={handleResetPassword}
+                marginHorizontal={20}
+            />
             <View style={styles.SignupOptionContainer}>
                 <Text style={styles.SignupOptionText}>
                     Don't have an account? <TextLink text={"Sign up"} redirectTo={"/SignUp"} />
