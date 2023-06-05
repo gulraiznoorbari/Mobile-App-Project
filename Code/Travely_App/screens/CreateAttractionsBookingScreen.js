@@ -174,7 +174,9 @@ const CreateAttractionsBookingScreen = ({ route }) => {
                 <View style={styles.bookingContainer}>
                     <View style={styles.bookingHeader}>
                         <Text style={styles.bookingTitle}>Booking Details</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate("EditBooking")}>
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate("EditAttractionBooking")}
+                        >
                             <MaterialCommunityIcons
                                 name="square-edit-outline"
                                 size={24}
