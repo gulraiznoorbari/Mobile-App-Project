@@ -1,21 +1,29 @@
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useState } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import StarRating from "react-native-star-rating-widget";
+import moment from "moment";
 
 import FontLoader from "../components/FontLoader";
 import { PlaceHolder } from "../assets/images";
 import PrimaryButton from "../components/Buttons/PrimaryButton";
 
-const CreateBookingScreen = () => {
+const CreateAttractionsBookingScreen = ({ route }) => {
     const navigation = useNavigation();
+    const data = route?.params?.param;
+
+    const [date, setDate] = useState(moment(Date.now()).format("DD/MM/YYYY"));
+    const [children, setChildren] = useState(0);
+    const [adults, setAdults] = useState(1);
+    const [price, setPrice] = useState(0);
+    const [totalPrice, setTotalPrice] = useState(price);
 
     useLayoutEffect(() => {
         navigation.setOptions({
             headerShown: true,
-            headerTitle: "Create Booking",
+            headerTitle: data?.name,
             headerTitleStyle: {
                 fontFamily: "Poppins-Bold",
                 fontSize: 20,
@@ -65,26 +73,92 @@ const CreateBookingScreen = () => {
         // });
     };
 
+    const bookAttraction = () => {
+        console.log("Book Attraction");
+        // 1. get the current user
+        // const user = auth.currentUser;
+
+        // // 2. get the user's bookings collection
+        // const bookingsRef = firestore
+        //     .collection("users") // users collection
+        //     .doc(user.uid) // user document
+        //     .collection("bookings"); // bookings collection
+
+        // // 3. add the data to the bookings collection
+        // bookingsRef.add(data);
+
+        // // 4. show a toast message
+        // Toast.show({
+        //     type: "success",
+        //     position: "bottom",
+        //     text1: "Attraction Booked",
+        //     text2: "Attraction booked successfully",
+        //     visibilityTime: 2000,
+        //     autoHide: true,
+        //     bottomOffset: 60,
+        // });
+
+        // // 5. navigate to the bookings screen
+        // navigation.navigate("Bookings");
+    };
+
     return (
         <ScrollView contentContainerStyle={styles.mainContainer}>
             <FontLoader>
                 <View style={styles.imagesContainer}>
-                    <Image source={PlaceHolder} resizeMode="contain" style={styles.heroImage} />
+                    <Image
+                        source={{
+                            uri: data?.photo?.images?.medium?.url
+                                ? data?.photo?.images?.medium?.url
+                                : "https://cdn.pixabay.com/photo/2015/10/30/12/22/eat-1014025_1280.jpg",
+                        }}
+                        resizeMode="cover"
+                        style={styles.heroImage}
+                    />
                     <View style={styles.imagesList}>
-                        <Image source={PlaceHolder} resizeMode="cover" style={styles.listImage} />
-                        <Image source={PlaceHolder} resizeMode="cover" style={styles.listImage} />
-                        <Image source={PlaceHolder} resizeMode="cover" style={styles.listImage} />
-                        <Image source={PlaceHolder} resizeMode="cover" style={styles.listImage} />
+                        <Image
+                            source={{
+                                uri: data?.photo?.images?.small?.url
+                                    ? data?.photo?.images?.small?.url
+                                    : "https://cdn.pixabay.com/photo/2015/10/30/12/22/eat-1014025_1280.jpg",
+                            }}
+                            resizeMode="cover"
+                            style={styles.listImage}
+                        />
+                        <Image
+                            source={{
+                                uri: data?.photo?.images?.small?.url
+                                    ? data?.photo?.images?.small?.url
+                                    : "https://cdn.pixabay.com/photo/2015/10/30/12/22/eat-1014025_1280.jpg",
+                            }}
+                            resizeMode="cover"
+                            style={styles.listImage}
+                        />
+                        <Image
+                            source={{
+                                uri: data?.photo?.images?.small?.url
+                                    ? data?.photo?.images?.small?.url
+                                    : "https://cdn.pixabay.com/photo/2015/10/30/12/22/eat-1014025_1280.jpg",
+                            }}
+                            resizeMode="cover"
+                            style={styles.listImage}
+                        />
+                        <Image
+                            source={{
+                                uri: data?.photo?.images?.small?.url
+                                    ? data?.photo?.images?.small?.url
+                                    : "https://cdn.pixabay.com/photo/2015/10/30/12/22/eat-1014025_1280.jpg",
+                            }}
+                            resizeMode="cover"
+                            style={styles.listImage}
+                        />
                     </View>
                 </View>
                 <View style={styles.descriptionContainer}>
-                    <Text style={styles.descriptionTitle}>Title</Text>
-                    <Text style={styles.descriptionText}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-                        voluptatum voluptates. Quisquam, voluptatum voluptates.
-                    </Text>
+                    <Text style={styles.descriptionTitle}>{data?.name}</Text>
+                    <Text style={styles.descriptionText}>{data?.description}</Text>
                     <StarRating
-                        rating={3.5}
+                        rating={data?.rating}
                         color="gold"
                         starSize={20}
                         starStyle={{
@@ -110,29 +184,23 @@ const CreateBookingScreen = () => {
                     </View>
                     <View style={styles.CheckingContainer}>
                         <View style={styles.CheckingTextContainer}>
-                            <Text style={styles.CheckingInText}>Check In</Text>
-                            <Text style={styles.CheckingInValue}>Sat, June 10</Text>
-                        </View>
-                        <View style={styles.CheckingTextContainer}>
-                            <Text style={styles.CheckingOutText}>Check Out</Text>
-                            <Text style={styles.CheckingOutValue}>Sat, June 12</Text>
+                            <Text style={styles.CheckingInText}>Booking Date</Text>
+                            <Text style={styles.CheckingInValue}>{date}</Text>
                         </View>
                     </View>
                     <View style={styles.GuestStatusContainer}>
-                        <Text style={styles.GuestStatusText}>Rooms and Guests</Text>
-                        <Text style={styles.GuestStatusValue}>1 Room, 1 Adult, 0 Children</Text>
-                    </View>
-                    <View style={styles.RoomTypeContainer}>
-                        <Text style={styles.RoomTypeText}>Room Type</Text>
-                        <Text style={styles.RoomTypeValue}>Single Bed</Text>
+                        <Text style={styles.GuestStatusText}>Number of People</Text>
+                        <Text style={styles.GuestStatusValue}>
+                            {adults} Adult, {children} Children
+                        </Text>
                     </View>
                     <View style={styles.PriceContainer}>
                         <Text style={styles.PriceText}>Price</Text>
-                        <Text style={styles.PriceValue}>$40</Text>
+                        <Text style={styles.PriceValue}>${price}</Text>
                     </View>
                     <View style={styles.TotalContainer}>
                         <Text style={styles.TotalText}>Total</Text>
-                        <Text style={styles.TotalValue}>$40</Text>
+                        <Text style={styles.TotalValue}>${totalPrice}</Text>
                     </View>
                 </View>
                 <PrimaryButton
@@ -140,8 +208,8 @@ const CreateBookingScreen = () => {
                     action={() => navigation.navigate("Home")}
                     marginHorizontal={0}
                 />
-                <View style={styles.policyContainer}>
-                    <Text style={styles.policyText}>Google Ad Here</Text>
+                <View style={styles.adsContainer}>
+                    <Text style={styles.adsText}>Google Ad Here</Text>
                 </View>
             </FontLoader>
         </ScrollView>
@@ -212,8 +280,6 @@ const styles = StyleSheet.create({
     },
     CheckingContainer: {
         flexDirection: "row",
-        justifyContent: "space-around",
-        marginLeft: -50,
         marginBottom: 10,
     },
     CheckingInText: {
@@ -248,20 +314,6 @@ const styles = StyleSheet.create({
         fontFamily: "Poppins",
         color: "#003580",
     },
-    RoomTypeContainer: {
-        flexDirection: "column",
-        justifyContent: "space-between",
-        marginBottom: 10,
-    },
-    RoomTypeText: {
-        fontSize: 14,
-        fontFamily: "Poppins SemiBold",
-    },
-    RoomTypeValue: {
-        fontSize: 12,
-        fontFamily: "Poppins",
-        color: "#003580",
-    },
     PriceContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
@@ -292,7 +344,7 @@ const styles = StyleSheet.create({
         fontFamily: "Poppins-Bold",
         color: "#003580",
     },
-    policyContainer: {
+    adsContainer: {
         width: "100%",
         paddingVertical: 15,
         paddingHorizontal: 10,
@@ -300,4 +352,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default CreateBookingScreen;
+export default CreateAttractionsBookingScreen;

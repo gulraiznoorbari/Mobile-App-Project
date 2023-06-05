@@ -13,7 +13,7 @@ const PlacesSearchBar = ({ setBl_lat, setBl_lng, setTr_lat, setTr_lng }) => {
                     fetchDetails={true}
                     onPress={(data, details) => {
                         // 'details' is provided when fetchDetails = true
-                        console.log(data, details);
+                        // console.log(data, details);
                         console.log(details?.geometry?.viewport);
                         setBl_lat(details?.geometry?.viewport?.southwest?.lat);
                         setBl_lng(details?.geometry?.viewport?.southwest?.lng);
