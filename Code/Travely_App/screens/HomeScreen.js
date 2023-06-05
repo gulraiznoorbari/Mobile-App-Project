@@ -29,6 +29,7 @@ const HomeScreen = () => {
     });
 
     useEffect(() => {
+        const { bl_lat, bl_lng, tr_lat, tr_lng } = coordinates;
         setIsLoading(true);
         getPlacesData(bl_lat, bl_lng, tr_lat, tr_lng, "attractions").then((data) => {
             setMainData(data);
@@ -36,7 +37,7 @@ const HomeScreen = () => {
                 setIsLoading(false);
             }, 2000);
         });
-    }, [bl_lat, bl_lng, tr_lat, tr_lng]);
+    }, [coordinates]);
 
     const renderAttractionsCard = ({ item }) => (
         <AttractionsCard
@@ -56,18 +57,21 @@ const HomeScreen = () => {
 
     const handleCityPress = (city) => {
         setMainData([]);
-        setBl_lat(null);
-        setBl_lng(null);
-        setTr_lat(null);
-        setTr_lng(null);
-        console.log(city);
-        console.log(city);
+        setCoordinates({
+            bl_lat: null,
+            bl_lng: null,
+            tr_lat: null,
+            tr_lng: null,
+        });
         if (city === "Dubai") {
-            setBl_lat(25.0657);
-            setBl_lng(55.17128);
-            setTr_lat(25.276987);
-            setTr_lng(55.296249);
-            getPlacesData(bl_lat, bl_lng, tr_lat, tr_lng, "attractions")
+            setCoordinates({
+                bl_lat: 25.0657,
+                bl_lng: 55.17128,
+                tr_lat: 25.276987,
+                tr_lng: 55.296249,
+            });
+            setIsLoading(true);
+            getPlacesData(25.0657, 55.17128, 25.276987, 55.296249, "attractions")
                 .then((data) => {
                     setMainData(data);
                     setIsLoading(false);
@@ -79,11 +83,13 @@ const HomeScreen = () => {
             navigation.navigate("DestinationDetail", { param: mainData });
             setMainData([]);
         } else if (city === "London") {
-            setBl_lat(51.5074);
-            setBl_lng(-0.1278);
-            setTr_lat(51.5207);
-            setTr_lng(-0.0978);
-            getPlacesData(bl_lat, bl_lng, tr_lat, tr_lng, "attractions")
+            setCoordinates({
+                bl_lat: 51.5074,
+                bl_lng: -0.1278,
+                tr_lat: 51.5207,
+                tr_lng: -0.0978,
+            });
+            getPlacesData(51.5074, -0.1278, 51.5207, -0.0978, "attractions")
                 .then((data) => {
                     setMainData(data);
                     setIsLoading(false);
@@ -95,11 +101,13 @@ const HomeScreen = () => {
             navigation.navigate("DestinationDetail", { param: mainData });
             setMainData([]);
         } else if (city === "New York City") {
-            setBl_lat(40.7128);
-            setBl_lng(-74.006);
-            setTr_lat(40.7218);
-            setTr_lng(-73.9973);
-            getPlacesData(bl_lat, bl_lng, tr_lat, tr_lng, "attractions")
+            setCoordinates({
+                bl_lat: 40.7128,
+                bl_lng: -74.006,
+                tr_lat: 40.7218,
+                tr_lng: -73.9973,
+            });
+            getPlacesData(40.7128, -74.006, 40.7218, -73.9973, "attractions")
                 .then((data) => {
                     setMainData(data);
                     setIsLoading(false);
@@ -111,11 +119,13 @@ const HomeScreen = () => {
             navigation.navigate("DestinationDetail", { param: mainData });
             setMainData([]);
         } else if (city === "Singapore") {
-            setBl_lat(1.29027);
-            setBl_lng(103.851959);
-            setTr_lat(1.3047);
-            setTr_lng(103.852);
-            getPlacesData(bl_lat, bl_lng, tr_lat, tr_lng, "attractions")
+            setCoordinates({
+                bl_lat: 1.29027,
+                bl_lng: 103.851959,
+                tr_lat: 1.3047,
+                tr_lng: 103.852,
+            });
+            getPlacesData(1.29027, 103.851959, 1.3047, 103.852, "attractions")
                 .then((data) => {
                     setMainData(data);
                     setIsLoading(false);
@@ -145,14 +155,13 @@ const HomeScreen = () => {
                                     placeholder="Where are you going?"
                                     fetchDetails={true}
                                     onPress={(data, details) => {
-                                        // 'details' is provided when fetchDetails = true
-                                        // console.log(data, details);
-                                        // console.log(details?.name);
-                                        // console.log(details?.geometry?.viewport);
-                                        setBl_lat(details?.geometry?.viewport?.southwest?.lat);
-                                        setBl_lng(details?.geometry?.viewport?.southwest?.lng);
-                                        setTr_lat(details?.geometry?.viewport?.northeast?.lat);
-                                        setTr_lng(details?.geometry?.viewport?.northeast?.lng);
+                                        setCoordinates((prevCoordinates) => ({
+                                            ...prevCoordinates,
+                                            bl_lat: details?.geometry?.viewport?.southwest?.lat,
+                                            bl_lng: details?.geometry?.viewport?.southwest?.lng,
+                                            tr_lat: details?.geometry?.viewport?.northeast?.lat,
+                                            tr_lng: details?.geometry?.viewport?.northeast?.lng,
+                                        }));
                                     }}
                                     query={{
                                         key: GOOGLE_PLACES_API_KEY,
