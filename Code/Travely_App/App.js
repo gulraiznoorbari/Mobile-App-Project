@@ -12,10 +12,13 @@ import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import PasswordResetScreen from "./screens/PasswordResetScreen";
 import WishlistScreen from "./screens/WishlistScreen";
-import BookingsScreen from "./screens/BookingsScreen";
+import BookingsListScreen from "./screens/BookingsListScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import DestinationDetailScreen from "./screens/DestinationDetailScreen";
-import CreateBookingScreen from "./screens/CreateBookingScreen";
+import CreateHotelBookingScreen from "./screens/Hotels/CreateHotelBookingScreen";
+import EditHotelBooking from "./screens/Hotels/EditHotelBooking";
+import CreateAttractionsBookingScreen from "./screens/Attractions/CreateAttractionsBookingScreen";
+import ConfirmAttractionsBooking from "./screens/Attractions/ConfirmAttractionsBooking";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -82,17 +85,52 @@ const TabNavigation = () => {
                 <Tab.Screen
                     name="Wishlist"
                     component={WishlistScreen}
-                    options={{ tabBarLabel: "Wishlist" }}
+                    options={{
+                        tabBarLabel: "Wishlist",
+                        headerShown: true,
+                        headerStyle: {
+                            backgroundColor: "#003580",
+                            height: 75,
+                        },
+                        headerTintColor: "#fff",
+                        headerTitleStyle: {
+                            fontFamily: "Poppins-Bold",
+                            fontSize: 24,
+                        },
+                        headerBackTitleVisible: false,
+                    }}
                 />
                 <Tab.Screen
                     name="Bookings"
-                    component={BookingsScreen}
-                    options={{ tabBarLabel: "Bookings" }}
+                    component={BookingsListScreen}
+                    options={{
+                        tabBarLabel: "Bookings",
+                        headerShown: true,
+                        headerStyle: {
+                            backgroundColor: "#003580",
+                            height: 75,
+                        },
+                        headerTintColor: "#fff",
+                        headerTitleStyle: {
+                            fontFamily: "Poppins-Bold",
+                            fontSize: 24,
+                        },
+                        headerBackTitleVisible: false,
+                    }}
                 />
                 <Tab.Screen
                     name="Profile"
                     component={ProfileScreen}
-                    options={{ tabBarLabel: "Profile" }}
+                    options={{
+                        tabBarLabel: "Profile",
+                        headerShown: true,
+                        headerStyle: {
+                            backgroundColor: "#003580",
+                            height: 60,
+                        },
+                        headerTitle: "",
+                        headerBackTitleVisible: false,
+                    }}
                 />
             </Tab.Navigator>
         </FontLoader>
@@ -125,11 +163,68 @@ const App = () => {
                 />
                 <Stack.Screen name="DestinationDetail" component={DestinationDetailScreen} />
                 <Stack.Screen
-                    name="CreateBooking"
-                    component={CreateBookingScreen}
+                    name="CreateAttractionBooking"
+                    component={CreateAttractionsBookingScreen}
                     options={{
                         headerShown: true,
                         headerTitle: "Attractions",
+                        headerStyle: {
+                            backgroundColor: "#003580",
+                            height: 75,
+                        },
+                        headerTintColor: "#fff",
+                        headerTitleStyle: {
+                            fontWeight: "bold",
+                            fontFamily: "Poppins-Bold",
+                            fontSize: 24,
+                        },
+                        headerBackTitleVisible: false,
+                    }}
+                />
+                <Stack.Screen
+                    name="ConfirmAttractionsBooking"
+                    component={ConfirmAttractionsBooking}
+                    options={{
+                        headerShown: true,
+                        headerTitle: "Confirm Booking Details",
+                        headerStyle: {
+                            backgroundColor: "#003580",
+                            height: 75,
+                        },
+                        headerTintColor: "#fff",
+                        headerTitleStyle: {
+                            fontWeight: "bold",
+                            fontFamily: "Poppins-Bold",
+                            fontSize: 24,
+                        },
+                        headerBackTitleVisible: false,
+                    }}
+                />
+                <Stack.Screen
+                    name="CreateHotelBooking"
+                    component={CreateHotelBookingScreen}
+                    options={{
+                        headerShown: true,
+                        headerTitle: "Attractions",
+                        headerStyle: {
+                            backgroundColor: "#003580",
+                            height: 75,
+                        },
+                        headerTintColor: "#fff",
+                        headerTitleStyle: {
+                            fontWeight: "bold",
+                            fontFamily: "Poppins-Bold",
+                            fontSize: 24,
+                        },
+                        headerBackTitleVisible: false,
+                    }}
+                />
+                <Stack.Screen
+                    name="EditHotelBooking"
+                    component={EditHotelBooking}
+                    options={{
+                        headerShown: true,
+                        headerTitle: "Edit Booking Details",
                         headerStyle: {
                             backgroundColor: "#003580",
                             height: 75,

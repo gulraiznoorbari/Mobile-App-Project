@@ -6,8 +6,8 @@ import moment from "moment";
 import Modal from "react-native-modal";
 import FontLoader from "./FontLoader";
 
-const DatePicker = () => {
-    const [selectedStartDate, setSelectedStartDate] = useState(null);
+const DatePicker = ({ selectedDate, onDateChanging, placeHolder }) => {
+    const [selectedStartDate, setSelectedStartDate] = useState(selectedDate);
     const [isDatePickerVisible, setDatePickerVisible] = useState(false);
 
     const showDatePicker = () => {
@@ -20,6 +20,7 @@ const DatePicker = () => {
 
     const onDateChange = (date) => {
         setSelectedStartDate(date);
+        onDateChanging(date);
     };
 
     const renderDateInfo = () => {
@@ -34,10 +35,10 @@ const DatePicker = () => {
     return (
         <FontLoader>
             <TouchableOpacity onPress={showDatePicker}>
-                <View style={{ width: "45%" }}>
+                <View>
                     <MaterialCommunityIcons
                         name="calendar-range"
-                        size={24}
+                        size={22}
                         color="#000"
                         style={{
                             position: "absolute",
@@ -49,15 +50,15 @@ const DatePicker = () => {
                     <TextInput
                         value={renderDateInfo()}
                         editable={false}
-                        placeholder="Select date"
+                        placeholder={placeHolder ? placeHolder : "Select date"}
                         style={{
                             backgroundColor: "#fff",
                             padding: 6,
-                            paddingLeft: 50,
+                            paddingLeft: 45,
                             marginTop: 6,
                             borderRadius: 10,
                             borderWidth: 2,
-                            borderColor: "#000",
+                            borderColor: "#505050",
                             fontFamily: "Poppins",
                             fontSize: 15,
                         }}
@@ -77,7 +78,6 @@ const DatePicker = () => {
                     <TouchableOpacity
                         onPress={() => {
                             hideDatePicker();
-                            // setSelectedStartDate(null);
                         }}
                         style={{
                             position: "absolute",

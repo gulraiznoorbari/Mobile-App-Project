@@ -19,7 +19,7 @@ const DateRangePicker = () => {
         setDatePickerVisible(false);
     };
 
-    const onDateChange = (date, type) => {
+    const onDateChanged = (date, type) => {
         if (type === "END_DATE") {
             setSelectedEndDate(date);
         } else {
@@ -107,7 +107,7 @@ const DateRangePicker = () => {
                         todayTextStyle={{ fontWeight: "bold" }}
                         selectedDayColor="#003580"
                         selectedDayTextColor="#FFFFFF"
-                        onDateChange={onDateChange}
+                        onDateChange={onDateChanged}
                         width={325}
                         height={325}
                     />

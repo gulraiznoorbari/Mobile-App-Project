@@ -1,7 +1,7 @@
 import { Text, TouchableOpacity } from "react-native";
 import FontLoader from "../FontLoader";
 
-const PrimaryButton = ({ text, action, marginHorizontal }) => {
+const PrimaryButton = ({ text, action, marginHorizontal, fontSize }) => {
     return (
         <FontLoader>
             <TouchableOpacity
@@ -17,7 +17,7 @@ const PrimaryButton = ({ text, action, marginHorizontal }) => {
                 <Text
                     style={{
                         fontFamily: "Poppins-Bold",
-                        fontSize: 19,
+                        fontSize: fontSize ? fontSize : 19,
                         textAlign: "center",
                         color: "#fff",
                     }}

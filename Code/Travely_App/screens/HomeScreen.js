@@ -4,18 +4,19 @@ import { useNavigation } from "@react-navigation/native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { GOOGLE_PLACES_API_KEY } from "@env";
 import { FontAwesome } from "@expo/vector-icons";
+import "expo-dev-client";
 
 import FontLoader from "../components/FontLoader";
 import { authentication } from "../firebase/config";
 import { getPlacesData } from "../api/travelAdvisorAPI";
 import { Dubai, London, NewYorkCity, Singapore } from "../assets/images";
 import LoginScreen from "./LoginScreen";
-// import PlacesSearchBar from "../components/PlacesSearchBar";
 import DateRangePicker from "../components/DateRangePicker";
 import SquaredButton from "../components/Buttons/SquaredButton";
 import HeadingText from "../components/HeadingText";
 import DestinationCard from "../components/Cards/DestinationCard";
 import AttractionsCard from "../components/Cards/AttractionsCard";
+import GoogleAd from "../components/GoogleAd";
 
 const HomeScreen = () => {
     const navigation = useNavigation();
@@ -141,14 +142,15 @@ const HomeScreen = () => {
 
     return (
         <>
-            {!authentication.currentUser ? (
+            {authentication.currentUser ? (
                 isLoading ? (
                     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                         <ActivityIndicator size="large" color="#003580" />
                     </View>
                 ) : (
                     <FontLoader>
-                        <View style={styles.container}>
+                        <ScrollView contentContainerStyle={styles.container}>
+                            {/* <View style={styles.container}> */}
                             {/* Search Section */}
                             <View style={styles.placesSearchContainer}>
                                 <GooglePlacesAutocomplete
@@ -206,74 +208,73 @@ const HomeScreen = () => {
                             <DateRangePicker />
                             <SquaredButton text="Search" marginTop={7} padding={8} />
                             {/* Popular Destinations Section */}
-                            <ScrollView>
-                                <View>
-                                    <HeadingText text="Popular Destinations" />
-                                    <View
-                                        style={{
+                            <View>
+                                <HeadingText text="Popular Destinations" />
+                                <View
+                                    style={{
+                                        flexDirection: "row",
+                                        justifyContent: "space-between",
+                                    }}
+                                >
+                                    <DestinationCard
+                                        text={"Dubai"}
+                                        image={Dubai}
+                                        action={() => handleCityPress("Dubai")}
+                                    />
+                                    <DestinationCard
+                                        text={"London"}
+                                        image={London}
+                                        action={() => handleCityPress("London")}
+                                    />
+                                </View>
+                                <View
+                                    style={{
+                                        flexDirection: "row",
+                                        justifyContent: "space-between",
+                                    }}
+                                >
+                                    <DestinationCard
+                                        text={"New York City"}
+                                        image={NewYorkCity}
+                                        action={() => handleCityPress("New York City")}
+                                    />
+                                    <DestinationCard
+                                        text={"Singapore"}
+                                        image={Singapore}
+                                        action={() => handleCityPress("Singapore")}
+                                    />
+                                </View>
+                            </View>
+                            {/* Top Attractions */}
+                            <HeadingText text="Top Attractions" />
+                            <View>
+                                {mainData.length > 0 ? (
+                                    <FlatList
+                                        horizontal
+                                        contentContainerStyle={{
+                                            flexGrow: 1,
                                             flexDirection: "row",
                                             justifyContent: "space-between",
+                                            marginBottom: 20,
                                         }}
-                                    >
-                                        <DestinationCard
-                                            text={"Dubai"}
-                                            image={Dubai}
-                                            action={() => handleCityPress("Dubai")}
-                                        />
-                                        <DestinationCard
-                                            text={"London"}
-                                            image={London}
-                                            action={() => handleCityPress("London")}
-                                        />
-                                    </View>
+                                        data={mainData}
+                                        keyExtractor={(item, index) => index.toString()}
+                                        renderItem={renderAttractionsCard}
+                                    />
+                                ) : (
                                     <View
                                         style={{
-                                            flexDirection: "row",
-                                            justifyContent: "space-between",
+                                            flex: 1,
+                                            justifyContent: "center",
+                                            alignItems: "center",
                                         }}
                                     >
-                                        <DestinationCard
-                                            text={"New York City"}
-                                            image={NewYorkCity}
-                                            action={() => handleCityPress("New York City")}
-                                        />
-                                        <DestinationCard
-                                            text={"Singapore"}
-                                            image={Singapore}
-                                            action={() => handleCityPress("Singapore")}
-                                        />
+                                        <Text>Oops...No Data Found</Text>
                                     </View>
-                                </View>
-                                {/* Top Attractions */}
-                                <HeadingText text="Top Attractions" />
-                                <View>
-                                    {mainData.length > 0 ? (
-                                        <FlatList
-                                            horizontal
-                                            contentContainerStyle={{
-                                                flexGrow: 1,
-                                                flexDirection: "row",
-                                                justifyContent: "space-between",
-                                                marginBottom: 20,
-                                            }}
-                                            data={mainData}
-                                            keyExtractor={(item, index) => index.toString()}
-                                            renderItem={renderAttractionsCard}
-                                        />
-                                    ) : (
-                                        <View
-                                            style={{
-                                                flex: 1,
-                                                justifyContent: "center",
-                                                alignItems: "center",
-                                            }}
-                                        >
-                                            <Text>Oops...No Data Found</Text>
-                                        </View>
-                                    )}
-                                </View>
-                            </ScrollView>
-                        </View>
+                                )}
+                            </View>
+                            <GoogleAd />
+                        </ScrollView>
                     </FontLoader>
                 )
             ) : (

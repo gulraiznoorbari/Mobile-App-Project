@@ -10,7 +10,8 @@ import AttractionsCard from "../components/Cards/AttractionsCard";
 const DestinationDetailScreen = ({ route }) => {
     const navigation = useNavigation();
     const data = route?.params?.param;
-    console.log(data);
+    console.log(data[0]?.address_obj?.city);
+    console.log("DestinationDetailScreen");
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -18,7 +19,7 @@ const DestinationDetailScreen = ({ route }) => {
             headerStyle: {
                 height: 70,
             },
-            headerTitle: "DestinationDetail",
+            headerTitle: data[0]?.address_obj?.city,
             headerTitleStyle: {
                 fontFamily: "Poppins-Bold",
                 fontSize: 18,
@@ -78,7 +79,7 @@ const DestinationDetailScreen = ({ route }) => {
         <ScrollView>
             <Image source={PlaceHolder} style={styles.image} resizeMode="cover" />
             <View style={styles.container}>
-                <Text style={styles.descriptionHeading}>New York City</Text>
+                <Text style={styles.descriptionHeading}>{data[0]?.address_obj?.city}</Text>
                 <Text style={styles.descriptionText}>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque dolorem optio
                     facere unde eum error minus. Corporis eos pariatur porro saepe culpa quaerat

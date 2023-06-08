@@ -1,15 +1,19 @@
 import { useState, useEffect } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { signOut } from "firebase/auth";
+import * as ImagePicker from "expo-image-picker";
 
 import { authentication } from "../firebase/config";
 import { getUserData } from "../firebase/utils";
+import MenuOption from "../components/MenuOption";
+import { PlaceHolder } from "../assets/images";
+import FontLoader from "../components/FontLoader";
+import PrimaryButton from "../components/Buttons/PrimaryButton";
 
 const ProfileScreen = () => {
     const [userFirstName, setUserFirstName] = useState("");
-    const [userLastName, setUserLastName] = useState("");
-    const [userEmail, setUserEmail] = useState("");
+    const [profileImage, setProfileImage] = useState(null);
     const [errMessage, setErrMessage] = useState("");
 
     const navigation = useNavigation();
@@ -21,8 +25,6 @@ const ProfileScreen = () => {
                 console.log(userData.FirstName);
                 if (userData) {
                     setUserFirstName(userData.FirstName);
-                    setUserLastName(userData.LastName);
-                    setUserEmail(userData.Email);
                 }
             } catch (error) {
                 console.log(error.message);
@@ -34,16 +36,24 @@ const ProfileScreen = () => {
         }
     }, []);
 
-    const resetUserState = () => {
-        setUserFirstName("");
-        setUserLastName("");
-        setUserEmail("");
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        console.log(result);
+
+        if (!result.canceled) {
+            setProfileImage(result.uri);
+        }
     };
 
     const handleLogout = () => {
         signOut(authentication)
             .then(() => {
-                resetUserState();
                 console.log("User signed out!");
                 navigation.navigate("Login");
             })
@@ -54,39 +64,74 @@ const ProfileScreen = () => {
     };
 
     return (
-        <View>
-            <Text style={styles.heading}>Welcome to Travely!</Text>
-            <Text style={styles.subheading}>Name: {userFirstName + " " + userLastName}</Text>
-            <Text style={styles.subheading}>Email: {userEmail}</Text>
-            <View style={styles.buttonContainer}>
-                <Button title="Logout" onPress={handleLogout} />
+        <FontLoader>
+            <View style={styles.container}>
+                <TouchableOpacity onPress={pickImage}>
+                    <View style={styles.circleContainer}>
+                        {profileImage ? (
+                            <Image source={{ uri: profileImage }} style={styles.profileImage} />
+                        ) : (
+                            <Image source={PlaceHolder} style={styles.profileImage} />
+                        )}
+                    </View>
+                </TouchableOpacity>
+                <Text style={styles.subheading}>{userFirstName}</Text>
+                <View style={styles.optionsContainer}>
+                    <MenuOption icon="account" text="Bookings" redirectTo="Bookings" />
+                    <MenuOption
+                        icon="cart"
+                        text="Change Password"
+                        redirectTo="ChangePasswordScreen"
+                    />
+                    <Text
+                        style={{
+                            fontSize: 22,
+                            fontFamily: "Poppins-Bold",
+                            marginTop: 20,
+                            marginBottom: 10,
+                        }}
+                    >
+                        About
+                    </Text>
+                    <MenuOption icon="information" text="Privacy Policy" redirectTo="Privacy" />
+                    <MenuOption icon="logout" text="FAQ" redirectTo="FAQ" />
+                </View>
+                <View style={styles.buttonContainer}>
+                    <PrimaryButton text="Logout" action={handleLogout} />
+                </View>
+                <View style={styles.errorContainer}>
+                    <Text style={styles.errorText}>{errMessage}</Text>
+                </View>
             </View>
-            <View style={styles.errorContainer}>
-                <Text style={styles.errorText}>{errMessage}</Text>
-            </View>
-        </View>
+        </FontLoader>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        padding: 20,
-        marginTop: 50,
-    },
-    heading: {
-        fontSize: 20,
-        fontWeight: "bold",
-        textAlign: "center",
+        paddingHorizontal: 20,
+        marginTop: 20,
     },
     subheading: {
-        fontSize: 16,
-        fontWeight: "bold",
+        fontSize: 22,
+        fontFamily: "Poppins-Bold",
         textAlign: "center",
         marginTop: 20,
     },
     buttonContainer: {
-        marginTop: 20,
         padding: 20,
+    },
+    optionsContainer: {
+        marginTop: 10,
+    },
+    circleContainer: {
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    profileImage: {
+        width: 100,
+        height: 100,
+        borderRadius: 100 / 2,
     },
     errorText: {
         color: "red",
