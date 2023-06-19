@@ -7,15 +7,18 @@
         "name": "Travely_App",
         "slug": "travely",
         "orientation": "portrait",
-        // "plugins": ["@react-native-google-signin/google-signin"],
+        "plugins": ["@react-native-google-signin/google-signin"],
         "extra": {
             "eas": {
                 "projectId": "7787ccbb-7bbf-43ca-b9d8-2867e2bda1b1"
             }
         },
         "android": {
-            "package": "com.gulraizzz.travely"
-            // "googleServicesFile": "./google-services.json"
+            "package": "com.gulraizzz.travely",
+            "googleServicesFile": "./google-services.json"
         }
     }
+    // "react-native-google-mobile-ads": {
+    //     "android_app_id": "ca-app-pub-5046228411679769~2747993121"
+    // }
 }

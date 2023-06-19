@@ -31,10 +31,6 @@ const SignUpScreen = () => {
         setConfirmPassword("");
     };
 
-    const matchPassword = () => {
-        password === confirmPassword ? handleSignup() : setErrMessage("Passwords do not match");
-    };
-
     const signupSuccess = () => {
         console.log("User registered successfully");
         navigation.navigate("Home");
@@ -49,27 +45,30 @@ const SignUpScreen = () => {
     };
 
     const handleSignup = () => {
-        createUserWithEmailAndPassword(authentication, email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                AddUserToDB(user);
-                signupSuccess();
-                resetUser();
-            })
-            .catch((error) => {
-                if (error.code === "auth/email-already-in-use") {
-                    setErrMessage("That email address is already in use!");
-                }
-                if (error.code === "auth/invalid-email") {
-                    setErrMessage("That email address is invalid!");
-                }
-                if (error.code === "auth/weak-password") {
-                    setErrMessage("Password should be at least 6 characters");
-                } else {
-                    console.log(error);
-                    setErrMessage("Something went wrong, try again.");
-                }
-            });
+        console.log("Sign up button pressed");
+        password === confirmPassword
+            ? createUserWithEmailAndPassword(authentication, email, password)
+                  .then((userCredential) => {
+                      const user = userCredential.user;
+                      AddUserToDB(user);
+                      signupSuccess();
+                      resetUser();
+                  })
+                  .catch((error) => {
+                      if (error.code === "auth/email-already-in-use") {
+                          setErrMessage("That email address is already in use!");
+                      }
+                      if (error.code === "auth/invalid-email") {
+                          setErrMessage("That email address is invalid!");
+                      }
+                      if (error.code === "auth/weak-password") {
+                          setErrMessage("Password should be at least 6 characters");
+                      } else {
+                          console.log(error);
+                          setErrMessage("Something went wrong, try again.");
+                      }
+                  })
+            : setErrMessage("Passwords do not match");
     };
 
     return (
@@ -113,7 +112,7 @@ const SignUpScreen = () => {
                     setValue={setConfirmPassword}
                     hideInput={true}
                 />
-                <PrimaryButton text={"Sign up"} onPress={matchPassword} marginHorizontal={20} />
+                <PrimaryButton text={"Sign up"} onPress={handleSignup} marginHorizontal={20} />
                 <View style={styles.LoginOptionContainer}>
                     <Text style={styles.LoginOptionText}>
                         Already a member? <TextLink text={"Login"} redirectTo={"/Login"} />

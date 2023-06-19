@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { Button, StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { signOut } from "firebase/auth";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import * as ImagePicker from "expo-image-picker";
 
 import { authentication } from "../firebase/config";
@@ -23,8 +24,10 @@ const ProfileScreen = () => {
             try {
                 const userData = await getUserData(authentication.currentUser.uid);
                 console.log(userData.FirstName);
-                if (userData) {
+                if (userData.FirstName) {
                     setUserFirstName(userData.FirstName);
+                } else if (userData.firstName) {
+                    setUserFirstName(userData.firstName);
                 }
             } catch (error) {
                 console.log(error.message);
@@ -51,9 +54,10 @@ const ProfileScreen = () => {
         }
     };
 
-    const handleLogout = () => {
-        signOut(authentication)
+    const handleLogout = async () => {
+        await signOut(authentication)
             .then(() => {
+                GoogleSignin.revokeAccess();
                 console.log("User signed out!");
                 navigation.navigate("Login");
             })
