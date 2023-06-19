@@ -2,6 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StatusBar } from "react-native";
+import "expo-dev-client";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import FontLoader from "./components/FontLoader";
