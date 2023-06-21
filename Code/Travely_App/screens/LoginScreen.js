@@ -46,10 +46,7 @@ const LoginScreen = () => {
             })
             .catch((error) => {
                 if (error.code === "auth/invalid-email") {
-                    console.log("That email address is invalid!");
-                }
-                if (error.code === "auth/user-not-found") {
-                    setErrMessage("User not found");
+                    console.log("Email address is invalid!");
                 }
                 if (error.code === "auth/wrong-password") {
                     setErrMessage("Wrong password");
