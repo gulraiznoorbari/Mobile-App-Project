@@ -112,7 +112,7 @@ const SignUpScreen = () => {
                     setValue={setConfirmPassword}
                     hideInput={true}
                 />
-                <PrimaryButton text={"Sign up"} onPress={handleSignup} marginHorizontal={20} />
+                <PrimaryButton text={"Sign up"} action={handleSignup} marginHorizontal={20} />
                 <View style={styles.LoginOptionContainer}>
                     <Text style={styles.LoginOptionText}>
                         Already a member? <TextLink text={"Login"} redirectTo={"/Login"} />
