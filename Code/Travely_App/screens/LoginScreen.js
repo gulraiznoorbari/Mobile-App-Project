@@ -22,8 +22,7 @@ const LoginScreen = () => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(authentication, (user) => {
             if (user) {
-                // navigation.navigate("Home");
-                console.log("User logged in");
+                console.log("User logged in...");
             }
         });
         return unsubscribe;
@@ -41,7 +40,6 @@ const LoginScreen = () => {
                 const user = userCredential.user;
                 console.log(user);
                 navigation.navigate("Home");
-                console.log("User logged in..");
                 resetUser();
             })
             .catch((error) => {
