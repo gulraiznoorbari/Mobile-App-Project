@@ -40,22 +40,6 @@ const HomeScreen = () => {
         });
     }, [coordinates]);
 
-    const renderAttractionsCard = ({ item }) => (
-        <AttractionsCard
-            imageSrc={
-                item?.photo?.images?.medium?.url
-                    ? item?.photo?.images?.medium?.url
-                    : "https://cdn.pixabay.com/photo/2015/10/30/12/22/eat-1014025_1280.jpg"
-            }
-            title={item?.name}
-            rating={item?.rating}
-            price={item?.offer_group?.offer_list[0]?.price}
-            openStatus={item?.open_now_text}
-            location={item?.location_string}
-            data={item}
-        />
-    );
-
     const handleCityPress = (city) => {
         setMainData([]);
         setCoordinates({
@@ -150,7 +134,6 @@ const HomeScreen = () => {
                 ) : (
                     <FontLoader>
                         <ScrollView contentContainerStyle={styles.container}>
-                            {/* <View style={styles.container}> */}
                             {/* Search Section */}
                             <View style={styles.placesSearchContainer}>
                                 <GooglePlacesAutocomplete
@@ -246,10 +229,10 @@ const HomeScreen = () => {
                                 </View>
                             </View>
                             {/* Top Attractions */}
-                            <HeadingText text="Top Attractions" />
                             <View>
-                                {mainData.length > 0 ? (
-                                    <FlatList
+                                <HeadingText text="Top Attractions" />
+                                <View>
+                                    <ScrollView
                                         horizontal
                                         contentContainerStyle={{
                                             flexGrow: 1,
@@ -257,21 +240,41 @@ const HomeScreen = () => {
                                             justifyContent: "space-between",
                                             marginBottom: 20,
                                         }}
-                                        data={mainData}
-                                        keyExtractor={(item, index) => index.toString()}
-                                        renderItem={renderAttractionsCard}
-                                    />
-                                ) : (
-                                    <View
-                                        style={{
-                                            flex: 1,
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                        }}
                                     >
-                                        <Text>Oops...No Data Found</Text>
-                                    </View>
-                                )}
+                                        {mainData.length > 0 ? (
+                                            <>
+                                                {mainData.map((item, index) => (
+                                                    <AttractionsCard
+                                                        key={index}
+                                                        imageSrc={
+                                                            item?.photo?.images?.medium?.url
+                                                                ? item?.photo?.images?.medium?.url
+                                                                : "https://cdn.pixabay.com/photo/2015/10/30/12/22/eat-1014025_1280.jpg"
+                                                        }
+                                                        title={item?.name}
+                                                        rating={item?.rating}
+                                                        price={
+                                                            item?.offer_group?.offer_list[0]?.price
+                                                        }
+                                                        location={item?.location_string}
+                                                        openStatus={item?.open_now_text}
+                                                        data={item}
+                                                    />
+                                                ))}
+                                            </>
+                                        ) : (
+                                            <View
+                                                style={{
+                                                    flex: 1,
+                                                    justifyContent: "center",
+                                                    alignItems: "center",
+                                                }}
+                                            >
+                                                <Text>Oops...No Data Found</Text>
+                                            </View>
+                                        )}
+                                    </ScrollView>
+                                </View>
                             </View>
                             <GoogleAd />
                         </ScrollView>
