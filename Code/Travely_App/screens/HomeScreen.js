@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, View, Text, FlatList, ActivityIndicator, ScrollView } from "react-native";
+import { StyleSheet, View, Text, ActivityIndicator, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { GOOGLE_PLACES_API_KEY } from "@env";
@@ -133,7 +133,7 @@ const HomeScreen = () => {
                     </View>
                 ) : (
                     <FontLoader>
-                        <ScrollView contentContainerStyle={styles.container}>
+                        <View style={[styles.container, { marginBottom: 10 }]}>
                             {/* Search Section */}
                             <View style={styles.placesSearchContainer}>
                                 <GooglePlacesAutocomplete
@@ -190,6 +190,8 @@ const HomeScreen = () => {
                             </View>
                             <DateRangePicker />
                             <SquaredButton text="Search" marginTop={7} padding={8} />
+                        </View>
+                        <ScrollView contentContainerStyle={styles.container}>
                             {/* Popular Destinations Section */}
                             <View>
                                 <HeadingText text="Popular Destinations" />
@@ -235,10 +237,8 @@ const HomeScreen = () => {
                                     <ScrollView
                                         horizontal
                                         contentContainerStyle={{
-                                            flexGrow: 1,
-                                            flexDirection: "row",
                                             justifyContent: "space-between",
-                                            marginBottom: 20,
+                                            marginBottom: 10,
                                         }}
                                     >
                                         {mainData.length > 0 ? (
