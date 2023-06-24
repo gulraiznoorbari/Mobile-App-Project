@@ -1,10 +1,49 @@
-import { StyleSheet, Text, Pressable, View, Image } from "react-native";
+import { useState } from "react";
+import { StyleSheet, Text, Pressable, View, Image, TouchableOpacity } from "react-native";
 import StarRating from "react-native-star-rating-widget";
+import { collection, deleteDoc, addDoc } from "firebase/firestore";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
+import { db, authentication } from "../../firebase/config";
+
 const AttractionsCard = ({ imageSrc, title, rating, price, location, openStatus, data }) => {
+    const [isFavorite, setIsFavorite] = useState(false);
     const navigation = useNavigation();
+
+    const toggleFavorite = async () => {
+        setIsFavorite(!isFavorite);
+        const user = authentication.currentUser;
+        if (user) {
+            const userId = user.uid;
+            const favoritesRef = collection(db, "Users", userId, "Favorites");
+            if (isFavorite) {
+                try {
+                    await deleteDoc(favoritesRef);
+                    setIsFavorite(false);
+                    console.log("Removed from favorites.");
+                } catch (error) {
+                    console.log("Error removing from favorites:", error);
+                }
+            } else {
+                try {
+                    const booking = {
+                        title: title,
+                        imageSrc: imageSrc,
+                        rating: rating,
+                        price: price,
+                        location: location,
+                        openStatus: openStatus,
+                    };
+                    await addDoc(favoritesRef, booking);
+                    setIsFavorite(true);
+                    console.log("Added to favorites.");
+                } catch (error) {
+                    console.log("Error adding to favorites:", error);
+                }
+            }
+        }
+    };
 
     return title && price ? (
         <Pressable
@@ -13,14 +52,15 @@ const AttractionsCard = ({ imageSrc, title, rating, price, location, openStatus,
         >
             <Image source={{ uri: imageSrc }} style={styles.image} resizeMode="cover" />
             <Text style={styles.text}>
-                {title?.length > 14 ? `${title.slice(0, 14)}..` : title}
+                {title?.length > 14 ? `${title.slice(0, 13)}...` : title}
             </Text>
-            <MaterialCommunityIcons
-                name="heart-outline"
-                size={22}
-                color="black"
-                style={styles.iconContainer}
-            />
+            <TouchableOpacity style={styles.iconContainer} onPress={() => toggleFavorite()}>
+                <MaterialCommunityIcons
+                    name={isFavorite ? "heart" : "heart-outline"}
+                    size={22}
+                    color={isFavorite ? "red" : "#000"}
+                />
+            </TouchableOpacity>
             <View style={styles.starRatingsContainer}>
                 <StarRating
                     rating={rating}
@@ -39,8 +79,7 @@ const AttractionsCard = ({ imageSrc, title, rating, price, location, openStatus,
             <Text style={styles.price}>from {price} per adult</Text>
             {openStatus ? <Text style={styles.status}>{openStatus}</Text> : <></>}
             <Text style={styles.location}>
-                {" "}
-                {location?.length > 18 ? `${title.slice(0, 18)}..` : location}
+                {location?.length > 20 ? `${location.slice(0, 18)}...` : location}
             </Text>
         </Pressable>
     ) : (
