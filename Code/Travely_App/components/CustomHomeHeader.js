@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import FontLoader from "./FontLoader";
 import ButtonWithIcon from "./Buttons/ButtonWithIcon";
-import placeholder_image from "../assets/images/placeholder_image.jpg";
+import { PlaceHolder } from "../assets/images";
 
 const CustomHomeHeader = () => {
     const navigation = useNavigation();
@@ -13,7 +13,7 @@ const CustomHomeHeader = () => {
             <View style={styles.container}>
                 <Text style={styles.heading}>Explore</Text>
                 <Pressable onPress={() => navigation.navigate("Profile")}>
-                    <Image source={placeholder_image} style={styles.profileImage} />
+                    <Image source={PlaceHolder} style={styles.profileImage} />
                 </Pressable>
             </View>
             <View style={styles.heroButtonContainer}>

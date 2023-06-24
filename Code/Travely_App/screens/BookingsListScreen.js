@@ -106,7 +106,6 @@ const styles = StyleSheet.create({
         left: 175,
         top: -3,
     },
-
     image: {
         width: 100,
         height: 140,
@@ -116,7 +115,7 @@ const styles = StyleSheet.create({
     textContainer: {
         flexDirection: "column",
         width: "100%",
-        padding: 5,
+        paddingLeft: 5,
     },
     heading: {
         fontFamily: "Poppins-Bold",
