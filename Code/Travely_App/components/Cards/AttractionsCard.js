@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { StyleSheet, Text, Pressable, View, Image, TouchableOpacity } from "react-native";
 import StarRating from "react-native-star-rating-widget";
-import { collection, deleteDoc, addDoc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
@@ -17,15 +17,7 @@ const AttractionsCard = ({ imageSrc, title, rating, price, location, openStatus,
         if (user) {
             const userId = user.uid;
             const favoritesRef = collection(db, "Users", userId, "Favorites");
-            if (isFavorite) {
-                try {
-                    await deleteDoc(favoritesRef);
-                    setIsFavorite(false);
-                    console.log("Removed from favorites.");
-                } catch (error) {
-                    console.log("Error removing from favorites:", error);
-                }
-            } else {
+            if (!isFavorite) {
                 try {
                     const booking = {
                         title: title,
