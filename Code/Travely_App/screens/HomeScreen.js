@@ -17,6 +17,7 @@ import HeadingText from "../components/HeadingText";
 import DestinationCard from "../components/Cards/DestinationCard";
 import AttractionsCard from "../components/Cards/AttractionsCard";
 import GoogleAd from "../components/GoogleAd";
+import Articles from "../components/Articles";
 
 const HomeScreen = () => {
     const navigation = useNavigation();
@@ -276,6 +277,10 @@ const HomeScreen = () => {
                                     </ScrollView>
                                 </View>
                             </View>
+                            {/* Latest Articles */}
+                            <HeadingText text="Latest Articles" />
+                            <Articles />
+
                             <GoogleAd />
                         </ScrollView>
                     </FontLoader>
