@@ -17,7 +17,7 @@ import BookingsListScreen from "./screens/BookingsListScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import DestinationDetailScreen from "./screens/DestinationDetailScreen";
 import CreateHotelBookingScreen from "./screens/Hotels/CreateHotelBookingScreen";
-import EditHotelBooking from "./screens/Hotels/EditHotelBooking";
+import ConfirmHotelBooking from "./screens/Hotels/ConfirmHotelBooking";
 import CreateAttractionsBookingScreen from "./screens/Attractions/CreateAttractionsBookingScreen";
 import ConfirmAttractionsBooking from "./screens/Attractions/ConfirmAttractionsBooking";
 
@@ -221,8 +221,8 @@ const App = () => {
                     }}
                 />
                 <Stack.Screen
-                    name="EditHotelBooking"
-                    component={EditHotelBooking}
+                    name="ConfirmHotelBooking"
+                    component={ConfirmHotelBooking}
                     options={{
                         headerShown: true,
                         headerTitle: "Edit Booking Details",

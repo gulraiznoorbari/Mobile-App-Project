@@ -1,61 +1,81 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { collection, addDoc } from "firebase/firestore";
+import { db, authentication } from "../../firebase/config";
 import DropDownPicker from "react-native-dropdown-picker";
 import DatePicker from "../../components/DatePicker";
 import PrimaryButton from "../../components/Buttons/PrimaryButton";
 import FontLoader from "../../components/FontLoader";
 import CounterButton from "../../components/Buttons/CounterButton";
 import moment from "moment";
+import BookingConfirmed from "../../components/BookingConfirmed";
 
-const EditHotelBooking = () => {
-    const [room, setRoom] = useState(1);
-    const [adults, setAdults] = useState(1);
-    const [children, setChildren] = useState(0);
-    const [price, setPrice] = useState(100);
-    const [total, setTotal] = useState(0);
-    const [checkInDate, setCheckInDate] = useState(null);
-    const [checkOutDate, setCheckOutDate] = useState(null);
+const ConfirmHotelBooking = ({ route }) => {
+    const {
+        data,
+        checkInDate,
+        checkOutDate,
+        rooms,
+        children,
+        adults,
+        roomType,
+        roomPrice,
+        totalPrice,
+    } = route.params;
+
+    const [roomState, setRoomState] = useState(rooms);
+    const [adultState, setAdultState] = useState(adults);
+    const [childrenState, setChildrenState] = useState(children);
+    const [priceState, setPriceState] = useState(roomPrice);
+    const [totalState, setTotalState] = useState(totalPrice);
+    const [checkInDateState, setCheckInDateState] = useState(
+        moment(checkInDate, "DD/MM/YYYY").toDate(),
+    );
+    const [checkOutDateState, setCheckOutDateState] = useState(
+        moment(checkOutDate, "DD/MM/YYYY").toDate(),
+    );
     const [numberOfDays, setNumberOfDays] = useState(0);
-
     const [items, setItems] = useState([
         { label: "Standard", value: "Standard" },
         { label: "Luxury", value: "Luxury" },
     ]);
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(items[0].label);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isBookingConfirmed, setIsBookingConfirmed] = useState(false);
 
     const decrementRoom = () => {
-        if (room > 1) {
-            setRoom(room - 1);
+        if (roomState > 1) {
+            setRoomState(roomState - 1);
         }
     };
     const decrementAdults = () => {
-        if (adults > 1) {
-            setAdults(adults - 1);
+        if (adultState > 1) {
+            setAdultState(adultState - 1);
         }
     };
     const decrementChildren = () => {
-        if (children > 1) {
-            setChildren(children - 1);
+        if (childrenState > 1) {
+            setChildrenState(childrenState - 1);
         }
     };
 
     const incrementRoom = () => {
-        setRoom(room + 1);
+        setRoomState(roomState + 1);
     };
     const incrementAdults = () => {
-        setAdults(adults + 1);
+        setAdultState(adultState + 1);
     };
     const incrementChildren = () => {
-        setChildren(children + 1);
+        setChildrenState(childrenState + 1);
     };
 
     const calculateNumberOfDays = () => {
-        if (!checkInDate || !checkOutDate) {
+        if (!checkInDateState || !checkOutDateState) {
             console.log("No dates selected");
         }
-        const startDate = parseInt(moment(checkInDate).format("DD"), 10);
-        const endDate = parseInt(moment(checkOutDate).format("DD"), 10);
+        const startDate = parseInt(moment(checkInDateState).format("DD"), 10);
+        const endDate = parseInt(moment(checkOutDateState).format("DD"), 10);
         const numberOfDays = endDate - startDate;
         return numberOfDays;
     };
@@ -63,16 +83,57 @@ const EditHotelBooking = () => {
     useEffect(() => {
         const calculatedNumberOfDays = calculateNumberOfDays();
         setNumberOfDays(calculatedNumberOfDays);
-    }, [checkInDate, checkOutDate]);
+    }, [checkInDateState, checkOutDateState]);
 
     const calculateTotal = () => {
-        const totalPrice = numberOfDays * (room * price);
-        setTotal(totalPrice);
+        const totalPrice = numberOfDays * (roomState * priceState);
+        setTotalState(totalPrice);
     };
 
     useEffect(() => {
         calculateTotal();
-    }, [numberOfDays, room]); // Call calculateTotal whenever room, adults, or children changes
+    }, [numberOfDays, roomState]); // Call calculateTotal whenever room, adults, or children changes
+
+    const confirmBooking = async () => {
+        setIsLoading(true);
+        const user = authentication.currentUser;
+        if (user) {
+            const userId = user.uid;
+            const bookingRef = collection(db, "Users", userId, "Bookings");
+            try {
+                const booking = {
+                    image: data?.photo?.images?.medium?.url,
+                    name: data?.name,
+                    roomState: roomState,
+                    roomType: roomType,
+                    adultState: adultState,
+                    childrenState: childrenState,
+                    checkInDateState: moment(checkInDateState).format("DD/MM/YYYY"),
+                    checkOutDateState: moment(checkOutDateState).format("DD/MM/YYYY"),
+                    numberOfDays: numberOfDays,
+                    priceState: priceState,
+                    totalState: totalState,
+                };
+                await addDoc(bookingRef, booking)
+                    .then(() => {
+                        setTimeout(() => {
+                            setIsLoading(false);
+                        }, 2000);
+                        setIsBookingConfirmed(true);
+                    })
+                    .catch((error) => {
+                        setIsLoading(false);
+                        console.log(error.message);
+                    });
+            } catch (error) {
+                setIsLoading(false);
+                console.log(error.message);
+            }
+        } else {
+            setIsLoading(false);
+            console.log("User not logged in");
+        }
+    };
 
     return (
         <FontLoader>
@@ -81,24 +142,34 @@ const EditHotelBooking = () => {
                 <View style={styles.dateContainer}>
                     <View style={styles.dateInput}>
                         <Text style={styles.SubHeading}>Check In</Text>
-                        <DatePicker selectedDate={checkInDate} onDateChanging={setCheckInDate} />
+                        <DatePicker
+                            selectedDate={checkInDateState}
+                            onDateChanging={setCheckInDateState}
+                        />
                     </View>
                     <View style={styles.dateInput}>
                         <Text style={styles.SubHeading}>Check Out</Text>
-                        <DatePicker selectedDate={checkOutDate} onDateChanging={setCheckOutDate} />
+                        <DatePicker
+                            selectedDate={checkOutDateState}
+                            onDateChanging={setCheckOutDateState}
+                        />
                     </View>
                 </View>
                 <View style={styles.optionsContainer}>
                     <View style={styles.option}>
                         <Text style={styles.SubHeading}>Rooms</Text>
-                        <CounterButton subtract={decrementRoom} add={incrementRoom} count={room} />
+                        <CounterButton
+                            subtract={decrementRoom}
+                            add={incrementRoom}
+                            count={roomState}
+                        />
                     </View>
                     <View style={styles.option}>
                         <Text style={styles.SubHeading}>Adults</Text>
                         <CounterButton
                             subtract={decrementAdults}
                             add={incrementAdults}
-                            count={adults}
+                            count={adultState}
                         />
                     </View>
                     <View style={styles.option}>
@@ -106,7 +177,7 @@ const EditHotelBooking = () => {
                         <CounterButton
                             subtract={decrementChildren}
                             add={incrementChildren}
-                            count={children}
+                            count={childrenState}
                         />
                     </View>
                     <View style={styles.option}>
@@ -134,17 +205,23 @@ const EditHotelBooking = () => {
                             <Text style={[styles.SubHeading, { fontSize: 17 }]}>Price</Text>
                             <Text style={styles.daysRent}>per night</Text>
                         </View>
-                        <Text style={styles.PriceValue}>${price}</Text>
+                        <Text style={styles.PriceValue}>${priceState}</Text>
                     </View>
                     <View style={styles.TotalPriceContainer}>
                         <View style={styles.TotalContainer}>
                             <Text style={styles.heading}>Total</Text>
                             <Text style={styles.daysRent}>for {numberOfDays} days</Text>
                         </View>
-                        <Text style={styles.TotalValue}>${total}</Text>
+                        <Text style={styles.TotalValue}>${totalState}</Text>
                     </View>
                 </View>
-                <PrimaryButton text={"Update Booking Details"} marginHorizontal={0} fontSize={16} />
+                <BookingConfirmed isVisible={isLoading} isBookingConfirmed={isBookingConfirmed} />
+                <PrimaryButton
+                    text={"Confirm"}
+                    marginHorizontal={0}
+                    fontSize={16}
+                    action={() => confirmBooking()}
+                />
             </View>
         </FontLoader>
     );
@@ -211,4 +288,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default EditHotelBooking;
+export default ConfirmHotelBooking;

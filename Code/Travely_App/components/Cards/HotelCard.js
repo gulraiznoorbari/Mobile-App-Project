@@ -9,7 +9,7 @@ const HotelCard = ({ imageSrc, title, rating, price, location, data }) => {
     return title && price && location ? (
         <Pressable
             style={styles.container}
-            onPress={() => navigation.navigate("CreateBooking", { param: data })}
+            onPress={() => navigation.navigate("CreateHotelBooking", { param: data })}
         >
             <Image source={{ uri: imageSrc }} style={styles.image} resizeMode="cover" />
             <Text style={styles.text}>{title}</Text>

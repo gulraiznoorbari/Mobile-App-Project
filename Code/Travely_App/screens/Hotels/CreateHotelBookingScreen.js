@@ -1,5 +1,5 @@
 import { useLayoutEffect, useState } from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
@@ -7,18 +7,20 @@ import StarRating from "react-native-star-rating-widget";
 
 import FontLoader from "../../components/FontLoader";
 import PrimaryButton from "../../components/Buttons/PrimaryButton";
+import GoogleAd from "../../components/GoogleAd";
 
 const CreateHotelBookingScreen = ({ route }) => {
     const navigation = useNavigation();
     const data = route?.params?.param;
 
-    const [checkInDate, setCheckInDate] = useState("");
-    const [checkOutDate, setCheckOutDate] = useState("");
+    const [checkInDate, setCheckInDate] = useState(moment(Date.now()).format("DD/MM/YYYY"));
+    const [checkOutDate, setCheckOutDate] = useState(moment(Date.now()).format("DD/MM/YYYY"));
     const [rooms, setRooms] = useState(1);
     const [children, setChildren] = useState(0);
     const [adults, setAdults] = useState(1);
     const [roomType, setRoomType] = useState("Standard Room");
     const [roomPrice, setRoomPrice] = useState(0);
+    const [totalPrice, setTotalPrice] = useState(rooms * roomPrice);
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -55,44 +57,6 @@ const CreateHotelBookingScreen = ({ route }) => {
                         resizeMode="cover"
                         style={styles.heroImage}
                     />
-                    <View style={styles.imagesList}>
-                        <Image
-                            source={{
-                                uri: data?.photo?.images?.small?.url
-                                    ? data?.photo?.images?.small?.url
-                                    : "https://cdn.pixabay.com/photo/2015/10/30/12/22/eat-1014025_1280.jpg",
-                            }}
-                            resizeMode="cover"
-                            style={styles.listImage}
-                        />
-                        <Image
-                            source={{
-                                uri: data?.photo?.images?.small?.url
-                                    ? data?.photo?.images?.small?.url
-                                    : "https://cdn.pixabay.com/photo/2015/10/30/12/22/eat-1014025_1280.jpg",
-                            }}
-                            resizeMode="cover"
-                            style={styles.listImage}
-                        />
-                        <Image
-                            source={{
-                                uri: data?.photo?.images?.small?.url
-                                    ? data?.photo?.images?.small?.url
-                                    : "https://cdn.pixabay.com/photo/2015/10/30/12/22/eat-1014025_1280.jpg",
-                            }}
-                            resizeMode="cover"
-                            style={styles.listImage}
-                        />
-                        <Image
-                            source={{
-                                uri: data?.photo?.images?.small?.url
-                                    ? data?.photo?.images?.small?.url
-                                    : "https://cdn.pixabay.com/photo/2015/10/30/12/22/eat-1014025_1280.jpg",
-                            }}
-                            resizeMode="cover"
-                            style={styles.listImage}
-                        />
-                    </View>
                 </View>
                 <View style={styles.descriptionContainer}>
                     <Text style={styles.descriptionTitle}>{data?.name}</Text>
@@ -114,13 +78,6 @@ const CreateHotelBookingScreen = ({ route }) => {
                 <View style={styles.bookingContainer}>
                     <View style={styles.bookingHeader}>
                         <Text style={styles.bookingTitle}>Booking Details</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate("EditBooking")}>
-                            <MaterialCommunityIcons
-                                name="square-edit-outline"
-                                size={24}
-                                color="black"
-                            />
-                        </TouchableOpacity>
                     </View>
                     <View style={styles.CheckingContainer}>
                         <View style={styles.CheckingTextContainer}>
@@ -151,12 +108,22 @@ const CreateHotelBookingScreen = ({ route }) => {
                 </View>
                 <PrimaryButton
                     text="Book Now"
-                    action={() => navigation.navigate("Home")}
+                    action={() =>
+                        navigation.navigate("ConfirmHotelBooking", {
+                            data: data,
+                            checkInDate: checkInDate,
+                            checkOutDate: checkOutDate,
+                            rooms: rooms,
+                            children: children,
+                            adults: adults,
+                            roomType: roomType,
+                            roomPrice: roomPrice,
+                            totalPrice: totalPrice,
+                        })
+                    }
                     marginHorizontal={0}
                 />
-                <View style={styles.policyContainer}>
-                    <Text style={styles.policyText}>Google Ad Here</Text>
-                </View>
+                <GoogleAd />
             </FontLoader>
         </ScrollView>
     );
@@ -179,16 +146,6 @@ const styles = StyleSheet.create({
         height: 150,
         borderRadius: 5,
         marginBottom: 10,
-    },
-    imagesList: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        width: "100%",
-    },
-    listImage: {
-        width: "23%",
-        height: 80,
-        borderRadius: 5,
     },
     descriptionContainer: {
         width: "100%",
@@ -305,12 +262,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontFamily: "Poppins-Bold",
         color: "#003580",
-    },
-    policyContainer: {
-        width: "100%",
-        paddingVertical: 15,
-        paddingHorizontal: 10,
-        marginVertical: 10,
     },
 });
 
