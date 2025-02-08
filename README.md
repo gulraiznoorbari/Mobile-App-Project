@@ -1,3 +1,7 @@
+## 📱 Demo
+
+https://github.com/user-attachments/assets/e828c345-730f-4bc0-a649-d00489753ad8
+
 ## ⬇️ How to run the project
 
 1. Clone this repository in your local system.
